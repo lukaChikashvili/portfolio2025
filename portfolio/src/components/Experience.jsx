@@ -5,6 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import React, { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 
+
 const Experience = () => {
 
     const shaderRef = useRef();
@@ -31,12 +32,30 @@ const Experience = () => {
         { label: 'Contact', position: [10, 0, -65] }
       ], []);
 
+      // house
+      const houses = useMemo(() => [
+        { position: [-40, 0, -120], scale: 0.8 },
+        { position: [60, 0, -140], scale: 0.85 },
+        { position: [-70, 0, -130], scale: 0.75 },
+        { position: [30, 0, -110], scale: 0.9 },
+        { position: [50, 0, -120], scale: 0.8 },
+        { position: [120, 0, -170], scale: 0.85 },
+        { position: [0, 0, -130], scale: 0.75 },
+        { position: [140, 0, -110], scale: 0.9 },
+      ], []);
+
+
 
 
       // models
       const piano  = useGLTF('./piano.glb');
       const sign = useGLTF('./sign.glb');
       const tree = useGLTF('./tree.glb');
+      const house = useGLTF('./house.glb');
+      const book = useGLTF('./book.glb');
+      const notes = useGLTF('./notes.glb');
+    
+
 
       const getRandomTrees = (count, tree) => {
          const treeArr = [];
@@ -103,7 +122,27 @@ const Experience = () => {
         )
        })}
 
-   {getRandomTrees(10, tree)}
+
+{houses.map((item, i) => {
+        const clonedHouse = house.scene.clone(true);
+
+        return(
+            <group
+            key={i}
+            position={item.position}
+           
+          >
+            <primitive object={clonedHouse} scale={5} />
+           
+          </group>
+        )
+       })}
+
+
+  
+
+   {getRandomTrees(5, tree)}
+   
 
     </>
   )

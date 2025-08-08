@@ -2,6 +2,7 @@
 import Experience from "@/components/Experience";
 import Lights from "@/components/Lights";
 import { Canvas } from "@react-three/fiber";
+import { Physics } from "@react-three/rapier";
 import * as THREE from 'three'
 
 export default function Home() {
@@ -13,8 +14,10 @@ export default function Home() {
         scene.fog = new THREE.FogExp2(0xcce0ff, 0.002) 
         scene.background = new THREE.Color(0xcce0ff)  
       }} >
+        <Physics>
       <Lights />
         <Experience />
+        </Physics>
      </Canvas>
    </>
   );
