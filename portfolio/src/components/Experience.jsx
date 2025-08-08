@@ -36,6 +36,33 @@ const Experience = () => {
       // models
       const piano  = useGLTF('./piano.glb');
       const sign = useGLTF('./sign.glb');
+      const tree = useGLTF('./tree.glb');
+
+      const getRandomTrees = (count, tree) => {
+         const treeArr = [];
+
+
+          for(let i = 0; i < count; i++) {
+            const clonedTree = tree.scene.clone(true);
+
+            const x = (Math.random() - 0.5) * 100;
+            const z = (Math.random() - 0.5) * 100;
+            const y = 0;
+
+            clonedTree.position.set(x, y, z);
+
+
+            treeArr.push(
+                <primitive key={i} object={clonedTree} />
+            )
+
+          }
+
+          return treeArr;
+
+
+      }
+
 
 
 
@@ -75,6 +102,8 @@ const Experience = () => {
           </group>
         )
        })}
+
+   {getRandomTrees(10, tree)}
 
     </>
   )
