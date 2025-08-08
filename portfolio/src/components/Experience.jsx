@@ -1,6 +1,7 @@
 import { grassFragment } from '@/shaders/grass/fragment'
 import { grassVertex } from '@/shaders/grass/vertex'
 import { OrbitControls } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import React, { useRef } from 'react'
 import * as THREE from 'three'
 
@@ -11,8 +12,18 @@ const Experience = () => {
 
     const grassUniforms = useRef({
         uTime: { value: 0},
-        uSeason: { value: 1.3}
+        uSeason: { value: 2.3}
     });
+
+    useFrame((state) => {
+        const elapsed = state.clock.getElapsedTime();
+  
+        grassUniforms.current.uTime.value += 0.025;
+       
+
+  
+       
+      });
 
     
   return (
@@ -21,7 +32,7 @@ const Experience = () => {
 
        {/* Grass Field */}
        <mesh rotation={[-Math.PI * 0.5, 0, 0]}>
-        <planeGeometry args={[500, 600, 800, 800]} />
+        <planeGeometry args={[400, 400, 500, 500]} />
         <shaderMaterial
           ref={shaderRef}
           vertexShader={grassVertex}
