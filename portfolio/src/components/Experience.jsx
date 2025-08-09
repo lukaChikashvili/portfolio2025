@@ -4,6 +4,7 @@ import { Environment, OrbitControls, Text, useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
+import Smoke from './Smoke'
 
 
 const Experience = () => {
@@ -203,6 +204,10 @@ const Experience = () => {
    
   
    <primitive object={candle.scene} scale = {16} position = {[15, -13, 18]} />
+
+  {/* Smoke effect */}
+  <Smoke />
+
     </>
   )
 }
