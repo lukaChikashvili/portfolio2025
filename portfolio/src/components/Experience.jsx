@@ -2,7 +2,7 @@ import { grassFragment } from '@/shaders/grass/fragment'
 import { grassVertex } from '@/shaders/grass/vertex'
 import { Environment, OrbitControls, Text, useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import React, { useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 
@@ -54,7 +54,59 @@ const Experience = () => {
       const house = useGLTF('./house.glb');
       const book = useGLTF('./book.glb');
       const notes = useGLTF('./notes.glb');
+      const candle = useGLTF('./candle.glb');
+
+
+      const [noteMeshes, setNoteMeshes] = useState([]);
+      const startTimes = useRef([]);
+
+      useEffect(() => {
+        const meshes = [];
+        notes.scene.traverse((child) => {
+          if (child.isMesh) {
+            const clone = child.clone();
+            clone.scale.set(0.04, 0.04, 0.04);
+            clone.material = clone.material.clone(); 
+            clone.material.transparent = true;
+            meshes.push(clone);
+          }
+        });
     
+       
+        const clones = [];
+        for (let i = 0; i < 8; i++) {
+          const m = meshes[i % meshes.length].clone();
+          m.position.set(0, 20, 0);
+          clones.push(m);
+        }
+    
+        setNoteMeshes(clones);
+        startTimes.current = clones.map((_, i) => -i * 0.5); 
+      }, [notes]);
+    
+
+      useFrame((state) => {
+        const elapsed = state.clock.getElapsedTime();
+    
+        noteMeshes.forEach((mesh, i) => {
+          const t = elapsed - startTimes.current[i];
+    
+          if (t >= 0) {
+            mesh.visible = true;
+            mesh.position.y = 10 + t * 1.5;
+            mesh.position.x = Math.sin(t * 2) * 0.5; 
+            mesh.rotation.y += 0.02;
+            mesh.material.opacity = THREE.MathUtils.clamp(1 - t / 2, 0, 1);
+    
+           
+            if (mesh.position.y > 40 || mesh.material.opacity <= 0) {
+              startTimes.current[i] = elapsed;
+              mesh.position.set(0, 20, 0);
+              mesh.material.opacity = 1;
+            }
+          }
+        });
+      });
 
 
       const getRandomTrees = (count, tree) => {
@@ -105,7 +157,13 @@ const Experience = () => {
       </mesh>
 
       {/* Piano Model */}
-      <primitive object={piano.scene} />
+      <group position={[0, 0, 0]}>
+        <primitive object={piano.scene} />
+     
+      {/*noteMeshes.map((mesh, i) => (
+        <primitive key={i} object={mesh} />
+      ))*/}
+      </group>
       
        {signs.map((item, i) => {
         const clonedSign = sign.scene.clone(true);
@@ -141,9 +199,10 @@ const Experience = () => {
 
   
 
-   {getRandomTrees(5, tree)}
+   {getRandomTrees(0, tree)}
    
-
+  
+   <primitive object={candle.scene} scale = {16} position = {[15, -13, 18]} />
     </>
   )
 }
