@@ -7,6 +7,7 @@ import * as THREE from 'three'
 import Smoke from './Smoke'
 import Menu from './Menu'
 import House from './House'
+import Aquarium from './Aquarium'
 
 
 const Experience = () => {
@@ -162,7 +163,7 @@ const Experience = () => {
       {/* Piano Model */}
       <group position={[0, 0, 0]}>
         <primitive object={piano.scene} />
-     
+        
       {/*noteMeshes.map((mesh, i) => (
         <primitive key={i} object={mesh} />
       ))*/}
@@ -231,7 +232,8 @@ const Experience = () => {
  {/* House wall */}
   <House />
 
-
+{/* Aquarium */}
+<Aquarium />
     </>
   )
 }

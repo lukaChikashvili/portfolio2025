@@ -1,10 +1,13 @@
 import { useGLTF, useTexture } from '@react-three/drei'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { useThree } from '@react-three/fiber'
+import { RigidBody } from '@react-three/rapier'
 
 const House = () => {
+
+
    
     // wall texture
     const wallTexture = useTexture('./wall.webp');
@@ -39,6 +42,80 @@ const House = () => {
   }
 
 
+  const videoRef = useRef(null);
+  const videoTextureRef = useRef(null);
+
+  useEffect(() => {
+    const video = document.createElement('video');
+    video.src = '/tamada.mp4';
+    video.crossOrigin = 'anonymous';
+    video.loop = true;
+    video.muted = true;
+
+    videoRef.current = video;
+
+    video.playsInline = true; 
+    
+    const videoPromise = new Promise((resolve) => {
+      video.oncanplay = () => {
+        video.play().then(() => {
+          resolve(video);
+        }).catch(error => {
+          console.error('Video play failed:', error);
+          resolve(video);
+        });
+      };
+    });
+  
+    videoPromise.then((readyVideo) => {
+        const videoTexture = new THREE.VideoTexture(readyVideo);
+        videoTexture.minFilter = THREE.LinearFilter;
+        videoTexture.magFilter = THREE.LinearFilter;
+        videoTexture.format = THREE.RGBAFormat;
+      
+       
+        tv.scene.traverse((child) => {
+          if (child.isMesh && child.name === "TV_49Zoll_Screen1_0") {
+           
+            child.geometry.computeBoundingBox();
+            const bbox = child.geometry.boundingBox;
+            const screenWidth = bbox.max.x - bbox.min.x;
+            const screenHeight = bbox.max.y - bbox.min.y;
+      
+            const screenAspect = screenWidth / screenHeight;
+            const videoAspect = readyVideo.videoWidth / readyVideo.videoHeight;
+      
+          
+            if (videoAspect > screenAspect) {
+              
+              const scaleX = screenAspect / videoAspect;
+              videoTexture.repeat.set(scaleX, 1);
+              videoTexture.offset.set((1 - scaleX) / 2, 0);
+            } else {
+              
+              const scaleY = videoAspect / screenAspect;
+              videoTexture.repeat.set(1, scaleY);
+              videoTexture.offset.set(0, (1 - scaleY) / 2);
+            }
+      
+            child.material = new THREE.MeshBasicMaterial({
+              map: videoTexture,
+              toneMapped: false,
+            });
+            child.material.needsUpdate = true;
+          }
+        });
+      });
+      
+  
+  
+   
+    
+   
+  }, [tv]);
+    
+
+
 
   const shape = useMemo(() => {
   
@@ -68,15 +145,20 @@ const House = () => {
 
   return (
     <>
+    <RigidBody type='fixed'>
     <mesh position={[0, 18, 40]}>
       <shapeGeometry args={[shape]} />
       <meshStandardMaterial  map = {wallTexture} side={THREE.DoubleSide} />
     </mesh>
+    </RigidBody>
 
+<RigidBody type='fixed'>
 <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0,10, 190]}>
 <planeGeometry args={[400, 300]} />
 <meshStandardMaterial map = {floorTexture} side={THREE.DoubleSide} />
+
 </mesh>
+</RigidBody>
 
 <primitive object={title.scene} scale = {0.15} rotation = {[0, -0.2, 0]} position = {[15, 11, 40]} />
 <primitive object={tv.scene} scale = {6} position = {[-6, 23, 40.5]} />
@@ -88,6 +170,8 @@ const House = () => {
     <planeGeometry args = {[7, 2]} />
     <meshBasicMaterial map = {homeTexture} />
 </mesh>
+
+
 </>
   )
 }
