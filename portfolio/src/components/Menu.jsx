@@ -9,7 +9,7 @@ import { useThree } from '@react-three/fiber';
     const { camera } = useThree();
 
 
-    // show projects camera
+    // show projects camera movement
     const showProjects = () => {
          gsap.to(camera.position, {
             x: 0.57,
@@ -20,11 +20,22 @@ import { useThree } from '@react-three/fiber';
       
     });
 
-  
 
     
     }
 
+    // show about camera movement
+   const showAbout = () => {
+    gsap.to(camera.position, {
+    x: -5, 
+  z:5.5,
+  y: 13,
+  duration: 2,
+  ease: 'power2.inOut',
+  
+});
+
+   }
 
 
   return (
@@ -40,6 +51,7 @@ import { useThree } from '@react-three/fiber';
         texturePath='./about.png'
         position={[10, 10, 20]}
         rotation={[0, -0.9, 0]}
+        onclick={showAbout}
       />
 
        <Flag

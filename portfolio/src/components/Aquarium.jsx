@@ -13,8 +13,8 @@ const Aquarium = () => {
 
     const uniforms = useRef({
         uTime: {value: 0},
-        uBigWavesElevation: { value: 0.15 },
-        uBigWavesFrequency: { value: new THREE.Vector2(1.75, 1.1) },
+        uBigWavesElevation: { value: 0.2 },
+        uBigWavesFrequency: { value: new THREE.Vector2(2.75, 1.1) },
         uDepthColor: { value: new THREE.Color(debugObject.depthColor)},
         uSurfaceColor: { value: new THREE.Color(debugObject.surfaceColor)},
         uColorOffset: { value: 0.12},
@@ -29,7 +29,7 @@ const Aquarium = () => {
   return (
     <>
       <mesh position={[-5, 12.4, 5]}>
-      <boxGeometry args={[3, 1, 3]} />
+      <boxGeometry args={[4, 2, 3]} />
       <meshPhysicalMaterial
         color="#a0c8f0"
         transmission={0.9}      
@@ -45,7 +45,7 @@ const Aquarium = () => {
     </mesh>
 
     <mesh position={[-5, 12.2, 5]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[3, 2.5, 500, 500]} />
+        <planeGeometry args={[4, 2.9, 800, 800]} />
         <shaderMaterial vertexShader={waterVertex}
          fragmentShader={waterFragment} uniforms={uniforms.current} />
       </mesh>
