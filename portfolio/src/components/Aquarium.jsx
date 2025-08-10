@@ -1,10 +1,79 @@
 import { waterFragment } from '@/shaders/aqarium/fragment'
 import { waterVertex } from '@/shaders/aqarium/vertex'
+import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import React, { useRef } from 'react'
 import * as THREE from 'three'
 
+const getWaveElevation = (x, z, time, frequency, elevation) => {
+    return (
+      Math.sin(x * frequency.x + time) *
+      Math.sin(z * frequency.y + time) *
+      elevation
+    );
+  };
+
+  const getWaveNormal = (x, z, time, frequency, elevation) => {
+    const dx =
+      frequency.x *
+      elevation *
+      Math.cos(x * frequency.x + time) *
+      Math.sin(z * frequency.y + time);
+    const dz =
+      frequency.y *
+      elevation *
+      Math.sin(x * frequency.x + time) *
+      Math.cos(z * frequency.y + time);
+ 
+    return new THREE.Vector3(-dx, 1, -dz).normalize();
+  };
+
 const Aquarium = () => {
+
+    // paper boat
+    const boat = useGLTF('./boat.glb');
+    const boatRef = useRef();
+
+    const frequency = new THREE.Vector2(2.75, 1.1);
+    const elevation = 0.2;
+
+    const timeRef = useRef(0);
+
+    useFrame((state, delta) => {
+        timeRef.current += delta;
+    
+        if (boatRef.current) {
+          const pos = boatRef.current.position;
+    
+          
+          const y = getWaveElevation(
+            pos.x,
+            pos.z,
+            timeRef.current,
+            frequency,
+            elevation
+          );
+    
+         
+          boatRef.current.position.y = 12.2 + y; 
+    
+        
+          const normal = getWaveNormal(
+            pos.x,
+            pos.z,
+            timeRef.current,
+            frequency,
+            elevation
+          );
+    
+          
+          const up = new THREE.Vector3(0, 1, 0);
+          const quat = new THREE.Quaternion().setFromUnitVectors(up, normal);
+          boatRef.current.quaternion.slerp(quat, 0.1); 
+        }
+      });
+    
+
    
     const debugObject = {};
 
@@ -49,6 +118,8 @@ const Aquarium = () => {
         <shaderMaterial vertexShader={waterVertex}
          fragmentShader={waterFragment} uniforms={uniforms.current} />
       </mesh>
+
+      <primitive  ref = {boatRef} object={boat.scene} scale = {0.05} position={[-5, 12.4, 5]} />
     </>
   )
 }

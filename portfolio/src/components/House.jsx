@@ -4,6 +4,8 @@ import * as THREE from 'three'
 import gsap from 'gsap'
 import { useThree } from '@react-three/fiber'
 import { RigidBody } from '@react-three/rapier'
+import { goBack } from './GoBack'
+
 
 const House = () => {
 
@@ -26,18 +28,13 @@ const House = () => {
   const clock = useGLTF('./clock.glb');
 
   const { camera } = useThree();
+  
+  
 
 
   // back to home camera animation
-  const goBack = () => {
-    gsap.to(camera.position, {
-        x: -13,
-  y: 14,
-  z: 25,
-  duration: 2,
-  ease: 'power2.inOut',
-  
-});
+  const handleGoBack = () => {
+    goBack(camera);
 
   }
 
@@ -166,7 +163,7 @@ const House = () => {
 
 {/*  Go Back button */}
 
-<mesh position = {[0, 12, 40.2]} onClick={goBack}>
+<mesh position = {[0, 12, 40.2]} onClick={handleGoBack}>
     <planeGeometry args = {[7, 2]} />
     <meshBasicMaterial map = {homeTexture} />
 </mesh>
