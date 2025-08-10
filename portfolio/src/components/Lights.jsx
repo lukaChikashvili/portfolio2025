@@ -25,7 +25,7 @@ const Lights = () => {
   ref={sun}
   castShadow
   position={[10, 15, 5]}
-  intensity={2}
+  intensity={0.5}
   color="#ffddaa"
   shadow-mapSize-width={4096}
   shadow-mapSize-height={4096}

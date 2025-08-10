@@ -9,8 +9,8 @@ uniform float uSeason;
      if(uSeason < 0.5) {
       //spring
 
-      vec3 low = vec3(0.2, 0.6, 0.2);
-      vec3 high = vec3(0.5, 0.9, 0.5);
+      vec3 low = vec3(0.15, 0.2, 0.3);
+      vec3 high = vec3(0.45, 0.55, 0.75); 
       float blend = smoothstep(0.0, 2.5, vElevation);
       color = mix(low, high, blend);
      } else if (uSeason < 2.5) {

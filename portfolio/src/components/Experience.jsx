@@ -1,6 +1,6 @@
 import { grassFragment } from '@/shaders/grass/fragment'
 import { grassVertex } from '@/shaders/grass/vertex'
-import { Environment, OrbitControls, Text, useGLTF } from '@react-three/drei'
+import { Environment, OrbitControls, Sky, Stars, Text, useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
@@ -212,6 +212,20 @@ const Experience = () => {
    {/* Menu Flags */}
    <Menu />
 
+   <Stars />
+
+   <Sky
+      distance={450000}        
+      sunPosition={[0, 10, 0]} 
+      inclination={0}          
+      azimuth={0.25}           
+      turbidity={2}            
+      rayleigh={0.1}           
+      mieCoefficient={0.005}   
+      mieDirectionalG={0.8}    
+      elevation={-10}          
+    
+    />
 
     </>
   )
