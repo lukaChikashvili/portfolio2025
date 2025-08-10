@@ -1,4 +1,4 @@
-import { useTexture } from '@react-three/drei'
+import { useGLTF, useTexture } from '@react-three/drei'
 import React, { useMemo } from 'react'
 import * as THREE from 'three'
 
@@ -12,6 +12,11 @@ const House = () => {
   const floorTexture = useTexture('./floor.jpg');
   floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
   floorTexture.repeat.set(20, 20);
+
+  const title = useGLTF('./title.glb');
+  const tv = useGLTF('./tv.glb');
+  const clock = useGLTF('./clock.glb');
+
 
 
 
@@ -53,6 +58,10 @@ const House = () => {
 <planeGeometry args={[400, 300]} />
 <meshStandardMaterial map = {floorTexture} side={THREE.DoubleSide} />
 </mesh>
+
+<primitive object={title.scene} scale = {0.15} rotation = {[0, -0.2, 0]} position = {[15, 11, 40]} />
+<primitive object={tv.scene} scale = {6} position = {[-6, 23, 40.5]} />
+<primitive object={clock.scene} rotation = {[0, -1.1, 0]} scale = {6} position = {[-8, 20, 40.5]} />
 </>
   )
 }
