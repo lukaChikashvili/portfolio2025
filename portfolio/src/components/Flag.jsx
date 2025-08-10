@@ -5,7 +5,10 @@ import React, { useRef } from 'react'
 import * as THREE from 'three'
 import { useTexture } from '@react-three/drei'
 
-const Flag = ({ texturePath, position, rotation }) => {
+const Flag = ({ texturePath, position, rotation, onclick }) => {
+   
+ 
+
   const shaderRef = useRef()
   const texture = useTexture(texturePath)
 
@@ -24,7 +27,7 @@ const Flag = ({ texturePath, position, rotation }) => {
   })
 
   return (
-    <mesh rotation={rotation} position={position}>
+    <mesh rotation={rotation} position={position} onClick={onclick}>
       <planeGeometry args={[3, 10, 128, 128]} />
       <shaderMaterial
         ref={shaderRef}

@@ -1,10 +1,30 @@
 
 import React, { useRef } from 'react'
 import Flag from './Flag';
+import gsap from 'gsap'
+import { useThree } from '@react-three/fiber';
 
-const Menu = () => {
+ const Menu = () => {
+     
+    const { camera } = useThree();
 
- 
+
+    // show projects camera
+    const showProjects = () => {
+         gsap.to(camera.position, {
+            x: 0.57,
+      y: 19.6,
+      z: 52,
+      duration: 2,
+      ease: 'power2.inOut',
+      
+    });
+
+  
+
+    
+    }
+
 
 
   return (
@@ -13,6 +33,7 @@ const Menu = () => {
         texturePath='./projects.png'
         position={[-20, 10, 0]}
         rotation={[-0.2, -0.7, 0]}
+        onclick={showProjects}
       />
 
      <Flag
