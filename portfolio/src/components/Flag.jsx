@@ -28,7 +28,7 @@ const Flag = ({ texturePath, position, rotation }) => {
       <planeGeometry args={[3, 10, 128, 128]} />
       <shaderMaterial
         ref={shaderRef}
-        wireframe={true}
+        wireframe={false}
         side={THREE.DoubleSide}
         vertexShader={flagVertex}
         fragmentShader={flagFragment}

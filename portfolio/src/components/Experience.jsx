@@ -6,6 +6,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import Smoke from './Smoke'
 import Menu from './Menu'
+import House from './House'
 
 
 const Experience = () => {
@@ -226,6 +227,10 @@ const Experience = () => {
       elevation={-10}          
     
     />
+
+ {/* House wall */}
+  <House />
+
 
     </>
   )
