@@ -5,6 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import Smoke from './Smoke'
+import Menu from './Menu'
 
 
 const Experience = () => {
@@ -207,6 +208,10 @@ const Experience = () => {
 
   {/* Smoke effect */}
   <Smoke />
+
+   {/* Menu Flags */}
+   <Menu />
+
 
     </>
   )
