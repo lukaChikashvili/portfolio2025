@@ -1,6 +1,8 @@
 import { useGLTF, useTexture } from '@react-three/drei'
 import React, { useMemo } from 'react'
 import * as THREE from 'three'
+import gsap from 'gsap'
+import { useThree } from '@react-three/fiber'
 
 const House = () => {
    
@@ -13,11 +15,28 @@ const House = () => {
   floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
   floorTexture.repeat.set(20, 20);
 
+  const homeTexture = useTexture('./home.png');
+
+
   const title = useGLTF('./title.glb');
   const tv = useGLTF('./tv.glb');
   const clock = useGLTF('./clock.glb');
 
+  const { camera } = useThree();
 
+
+  // back to home camera animation
+  const goBack = () => {
+    gsap.to(camera.position, {
+        x: -13,
+  y: 14,
+  z: 25,
+  duration: 2,
+  ease: 'power2.inOut',
+  
+});
+
+  }
 
 
 
@@ -62,6 +81,13 @@ const House = () => {
 <primitive object={title.scene} scale = {0.15} rotation = {[0, -0.2, 0]} position = {[15, 11, 40]} />
 <primitive object={tv.scene} scale = {6} position = {[-6, 23, 40.5]} />
 <primitive object={clock.scene} rotation = {[0, -1.1, 0]} scale = {6} position = {[-8, 20, 40.5]} />
+
+{/*  Go Back button */}
+
+<mesh position = {[0, 12, 40.2]} onClick={goBack}>
+    <planeGeometry args = {[7, 2]} />
+    <meshBasicMaterial map = {homeTexture} />
+</mesh>
 </>
   )
 }
