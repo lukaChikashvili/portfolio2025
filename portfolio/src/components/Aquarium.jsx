@@ -1,9 +1,10 @@
 import { waterFragment } from '@/shaders/aqarium/fragment'
 import { waterVertex } from '@/shaders/aqarium/vertex'
 import { useGLTF } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import React, { useRef } from 'react'
 import * as THREE from 'three'
+import { goBack } from './GoBack'
 
 const getWaveElevation = (x, z, time, frequency, elevation) => {
     return (
@@ -29,6 +30,8 @@ const getWaveElevation = (x, z, time, frequency, elevation) => {
   };
 
 const Aquarium = () => {
+
+    const { camera } = useThree();
 
     // paper boat
     const boat = useGLTF('./boat.glb');
@@ -119,7 +122,7 @@ const Aquarium = () => {
          fragmentShader={waterFragment} uniforms={uniforms.current} />
       </mesh>
 
-      <primitive  ref = {boatRef} object={boat.scene} scale = {0.05} position={[-5, 12.4, 5]} />
+      <primitive onClick = {() => goBack(camera)} ref = {boatRef} object={boat.scene} scale = {0.05} position={[-5, 12.4, 5]} />
     </>
   )
 }

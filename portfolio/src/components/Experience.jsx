@@ -8,6 +8,7 @@ import Smoke from './Smoke'
 import Menu from './Menu'
 import House from './House'
 import Aquarium from './Aquarium'
+import Metro from './Metro'
 
 
 const Experience = () => {
@@ -234,6 +235,9 @@ const Experience = () => {
 
 {/* Aquarium */}
 <Aquarium />
+
+{/* Metro */}
+<Metro />
     </>
   )
 }
