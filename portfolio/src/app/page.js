@@ -3,10 +3,15 @@ import Experience from "@/components/Experience";
 import Lights from "@/components/Lights";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
+import { Moon, Sun } from "lucide-react";
+import { useState } from "react";
 import * as THREE from "three";
 
 function CameraDebugger() {
   const { camera } = useThree();
+
+ 
+
 
   useFrame(() => {
     console.log("Camera position:", camera.position);
@@ -18,7 +23,9 @@ function CameraDebugger() {
 
 export default function Home() {
   
+  const [isNight, setIsNight] = useState(false);
 
+  const toggleDayNight = () => setIsNight(!isNight);
   return (
     <>
       <Canvas
@@ -27,19 +34,27 @@ export default function Home() {
         shadows
         gl={{ physicallyCorrectLights: true }}
         onCreated={({ scene }) => {
-          scene.fog = new THREE.FogExp2(0xcce0ff, 0.002);
-          scene.background = new THREE.Color(0xcce0ff);
+         
+          scene.background = new THREE.Color(isNight ? 0x0a0a2a : 0xcce0ff);
+          scene.fog = new THREE.FogExp2(isNight ? 0x0a0a2a : 0xcce0ff, isNight ? 0.002 : 0.001);
         }}
       >
         <Physics>
-          <Lights />
-          <Experience />
+          <Lights isNight={isNight} />
+          <Experience isNight={isNight}/>
           <CameraDebugger />
           
         </Physics>
       </Canvas>
 
-     
+      <div className="absolute top-5 left-5 z-10">
+      <button
+  className="px-4 py-2  text-white rounded text-xl"
+  onClick={toggleDayNight}
+>
+   {isNight ? <Sun /> : <Moon />}
+</button>
+      </div>
     </>
   );
 }

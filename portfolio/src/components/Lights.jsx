@@ -1,54 +1,40 @@
-import { useFrame, useThree } from '@react-three/fiber';
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef } from "react";
 
-const Lights = () => {
+const Lights = ({ isNight }) => {
   const sun = useRef();
-  const { scene } = useThree();
 
+  if (isNight) {
+    // Night lights
+    return (
+      <>
+        <ambientLight intensity={0.2} color="#4455ff" />
+        <spotLight
+          ref={sun}
+          position={[10, 50, 10]}
+          angle={0.5}
+          penumbra={0.7}
+          intensity={3}
+          color="#aabbee"
+          castShadow
+          distance={50}
+          decay={2}
+          target-position={[0, 0, 0]}
+        />
+      </>
+    );
+  }
 
-
-
+  // Day lights
   return (
     <>
-      {/* Ambient Light */}
-      <ambientLight intensity={0.2} color="#4455ff" />
-
-      
-    
-
-      <spotLight
-  position={[5, 60, 5]}   
-  target-position={[0, 5, 0]} 
-  angle={0.4}             
-  penumbra={2}          
-  intensity={10}           
-  color={'blue'}      
-  castShadow
-  shadow-mapSize-width={2048}
-  shadow-mapSize-height={2048}
-  shadow-bias={-0.0001}  
-  distance={20}          
-  decay={2}              
-/>
-
-<spotLight
-      
-        position={[-15, 30, -10]}
-        angle={0.3}
-        penumbra={1}
-        intensity={2}
-        color="#ff66cc"
+      <ambientLight intensity={1} color="#ffffff" />
+      <directionalLight
+        ref={sun}
+        position={[50, 50, 50]}
+        intensity={1}
+        color="#fff5e1"
         castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
-        distance={20}
-        decay={2}
-        target-position={[0, 0, 0]}
       />
-
-<pointLight  position={[5, 5, 5]} intensity={1.5} color="#33ccff" distance={15} decay={2} />
-      <pointLight position={[-5, 5, -5]} intensity={1.5} color="#ff33aa" distance={15} decay={2} />
-      
     </>
   );
 };

@@ -11,15 +11,19 @@ import Aquarium from './Aquarium'
 import Metro from './Metro'
 
 
-const Experience = () => {
+const Experience = ({ isNight}) => {
 
     const shaderRef = useRef();
 
 
     const grassUniforms = useRef({
         uTime: { value: 0},
-        uSeason: { value: 0.4}
+        uSeason: { value: 2.3}
     });
+
+    useEffect(() => {
+      grassUniforms.current.uSeason.value = isNight ? 0.3 : 2.3;
+    }, [isNight]);
 
     useFrame((state) => {
         const elapsed = state.clock.getElapsedTime();
@@ -219,7 +223,7 @@ const Experience = () => {
 
    <Sky
       distance={450000}        
-      sunPosition={[0, 0, 0]} 
+      sunPosition={[0, isNight ? 0 : 10, 0]} 
       inclination={0}          
       azimuth={0.25}           
       turbidity={2}            
