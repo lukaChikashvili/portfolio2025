@@ -8,16 +8,20 @@ import { useThree } from '@react-three/fiber';
      
     const { camera } = useThree();
 
+    const fixedRotation = camera.rotation.clone();
+
 
     // show projects camera movement
-    const showProjects = () => {
+    const showContact = () => {
          gsap.to(camera.position, {
             x: 0.57,
       y: 19.6,
       z: 52,
       duration: 2,
       ease: 'power2.inOut',
-      
+      onUpdate: () => {
+        camera.rotation.copy(fixedRotation);
+      }
     });
 
 
@@ -51,6 +55,24 @@ import { useThree } from '@react-three/fiber';
   
    }
 
+    // show projects camera movement
+     
+    const showProjects = () => {
+      gsap.to(camera.position, {
+         x: 16,
+         y: 15,
+         z: -40,
+      duration: 2,
+      ease: 'power2.inOut',
+      onUpdate: () => {
+        camera.rotation.copy(fixedRotation);
+      }
+    });
+
+    
+    }
+
+
 
   return (
    <>
@@ -58,7 +80,7 @@ import { useThree } from '@react-three/fiber';
         texturePath='./projects.png'
         position={[-20, 10, 0]}
         rotation={[-0.2, -0.7, 0]}
-         onclick={showProjects}
+        onclick = {showProjects} 
       />
 
      <Flag
@@ -79,6 +101,7 @@ import { useThree } from '@react-three/fiber';
         texturePath='./contact.png'
         position={[-12, 10, -10]}
         rotation={[0, -0.6, 0]}
+        onclick={showContact}
       />
 
 

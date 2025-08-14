@@ -7,12 +7,12 @@ const Lights = ({ isNight }) => {
     // Night lights
     return (
       <>
-        <ambientLight intensity={0.2} color="#4455ff" />
+        <ambientLight intensity={10} color="#471396" />
         <spotLight
           ref={sun}
-          position={[10, 50, 10]}
+          position={[10, 200, 10]}
           angle={0.5}
-          penumbra={0.7}
+          penumbra={0.8}
           intensity={3}
           color="#aabbee"
           castShadow
@@ -27,7 +27,7 @@ const Lights = ({ isNight }) => {
   // Day lights
   return (
     <>
-      <ambientLight intensity={1} color="#ffffff" />
+      <ambientLight intensity={8} color="#FF9B00" />
       <directionalLight
         ref={sun}
         position={[50, 50, 50]}

@@ -150,8 +150,7 @@ const Experience = ({ isNight}) => {
     
   return (
     <>
-       <OrbitControls makeDefault />
-
+   
        <Environment preset="forest"  />
 
        {/* Grass Field */}
@@ -221,14 +220,7 @@ const Experience = ({ isNight}) => {
    <Menu />
    <Stars radius={100} depth={50} count={1300} factor={4} saturation={0} fade  />
 
-   <Cloud
-  opacity={0.5}
-  speed={0.4} 
-  width={10} 
-  depth={1.5}
-  segments={20} 
-/>
-
+  
    <Sky
       distance={450000}        
       sunPosition={[0, isNight ? 0 : 10, 0]} 
