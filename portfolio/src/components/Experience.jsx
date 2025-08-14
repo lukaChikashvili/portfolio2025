@@ -9,6 +9,7 @@ import Menu from './Menu'
 import House from './House'
 import Aquarium from './Aquarium'
 import Metro from './Metro'
+import FireFlies from './FireFlies'
 
 
 const Experience = ({ isNight}) => {
@@ -242,6 +243,11 @@ const Experience = ({ isNight}) => {
 
 {/* Metro */}
 <Metro />
+
+
+{/* FireFlies */}
+
+<FireFlies count={200} area={50} />
     </>
   )
 }
