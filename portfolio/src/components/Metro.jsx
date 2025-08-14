@@ -3,7 +3,7 @@ import React from 'react'
 
 const Metro = () => {
 
-   const train = useGLTF('./train.glb');
+  
 
 
   return (

@@ -18,7 +18,7 @@ const Experience = () => {
 
     const grassUniforms = useRef({
         uTime: { value: 0},
-        uSeason: { value: 2.3}
+        uSeason: { value: 0.4}
     });
 
     useFrame((state) => {
@@ -219,7 +219,7 @@ const Experience = () => {
 
    <Sky
       distance={450000}        
-      sunPosition={[0, 10, 0]} 
+      sunPosition={[0, 0, 0]} 
       inclination={0}          
       azimuth={0.25}           
       turbidity={2}            

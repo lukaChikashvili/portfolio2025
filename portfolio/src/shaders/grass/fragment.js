@@ -9,10 +9,13 @@ uniform float uSeason;
      if(uSeason < 0.5) {
       //spring
 
-      vec3 low = vec3(0.15, 0.2, 0.3);
-      vec3 high = vec3(0.45, 0.55, 0.75); 
+      vec3 low = vec3(0.02, 0.03, 0.06); 
+      vec3 high = vec3(0.1, 0.15, 0.25); 
       float blend = smoothstep(0.0, 2.5, vElevation);
       color = mix(low, high, blend);
+
+      vec3 moonlight = vec3(0.05, 0.07, 0.1);
+      color += moonlight * 0.2;
      } else if (uSeason < 2.5) {
       //summer
       

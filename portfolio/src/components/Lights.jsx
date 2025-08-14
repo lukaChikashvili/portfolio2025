@@ -1,73 +1,54 @@
 import { useFrame, useThree } from '@react-three/fiber';
 import React, { useRef, useState, useEffect } from 'react';
 
-const Lights = ({ nightMode }) => {
+const Lights = () => {
   const sun = useRef();
   const { scene } = useThree();
 
-  useEffect(() => {
-    
-    scene.background = nightMode
-      ? new THREE.Color('#ffff') 
-      : new THREE.Color('#b1e1ff'); 
-  }, [nightMode, scene]);
 
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    const radius = 20;
 
-    
-    if (!nightMode) {
-      sun.current.position.set(
-        Math.sin(t * 0.1) * radius,
-        Math.cos(t * 0.1) * radius,
-        10
-      );
-      sun.current.lookAt(0, 0, 0);
-    }
-  });
 
   return (
     <>
       {/* Ambient Light */}
-      <ambientLight intensity={nightMode ? 0.2 : 1} />
+      <ambientLight intensity={0.2} color="#4455ff" />
 
-      {/* Sun / Moon */}
-      <directionalLight
-        ref={sun}
-        castShadow
-        position={[10, 15, 5]}
-        intensity={nightMode ? 0.05 : 0.5}
-        color={nightMode ? '#8888ff' : '#ffddaa'}
-        shadow-mapSize-width={4096}
-        shadow-mapSize-height={4096}
-        shadow-camera-far={100}
-        shadow-camera-left={-30}
-        shadow-camera-right={30}
-        shadow-camera-top={30}
-        shadow-camera-bottom={-30}
-      />
+      
+    
 
-      {/* Hemisphere Light */}
-      <hemisphereLight
-        skyColor={nightMode ? '#0a0a1a' : '#b1e1ff'}
-        groundColor={nightMode ? '#111' : '#ffe4b5'}
-        intensity={nightMode ? 0.1 : 2}
-      />
-
-     
       <spotLight
-        position={[-10, 5, -10]}
+  position={[5, 60, 5]}   
+  target-position={[0, 5, 0]} 
+  angle={0.4}             
+  penumbra={2}          
+  intensity={10}           
+  color={'blue'}      
+  castShadow
+  shadow-mapSize-width={2048}
+  shadow-mapSize-height={2048}
+  shadow-bias={-0.0001}  
+  distance={20}          
+  decay={2}              
+/>
+
+<spotLight
+      
+        position={[-15, 30, -10]}
         angle={0.3}
-        penumbra={0.5}
-        intensity={nightMode ? 2 : 1}
-        color={nightMode ? '#88aaff' : '#ffd6aa'}
+        penumbra={1}
+        intensity={2}
+        color="#ff66cc"
         castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        distance={20}
+        decay={2}
+        target-position={[0, 0, 0]}
       />
 
-
-      <pointLight position={[1, 1.2, 0]} intensity={nightMode ? 1.2 : 0.8} color="#ff33cc" />
-      <pointLight position={[-1, 1.2, 0]} intensity={nightMode ? 1.2 : 0.8} color="#33ccff" />
+<pointLight  position={[5, 5, 5]} intensity={1.5} color="#33ccff" distance={15} decay={2} />
+      <pointLight position={[-5, 5, -5]} intensity={1.5} color="#ff33aa" distance={15} decay={2} />
+      
     </>
   );
 };
