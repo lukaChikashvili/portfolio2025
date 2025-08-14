@@ -1,6 +1,6 @@
 import { grassFragment } from '@/shaders/grass/fragment'
 import { grassVertex } from '@/shaders/grass/vertex'
-import { Environment, OrbitControls, Sky, Stars, Text, useGLTF } from '@react-three/drei'
+import { Cloud, Environment, OrbitControls, Sky, Stars, Text, useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
@@ -219,8 +219,15 @@ const Experience = ({ isNight}) => {
 
    {/* Menu Flags */}
    <Menu />
+   <Stars radius={100} depth={50} count={1300} factor={4} saturation={0} fade  />
 
-   <Stars />
+   <Cloud
+  opacity={0.5}
+  speed={0.4} 
+  width={10} 
+  depth={1.5}
+  segments={20} 
+/>
 
    <Sky
       distance={450000}        
@@ -247,7 +254,7 @@ const Experience = ({ isNight}) => {
 
 {/* FireFlies */}
 
-<FireFlies count={200} area={50} />
+<FireFlies />
     </>
   )
 }

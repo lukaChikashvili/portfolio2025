@@ -1,77 +1,55 @@
+import { Float } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef, useMemo } from "react";
 import * as THREE from "three";
 
-const FireFlies = ({ count = 50, area = 20}) => {
-    const pointsRef = useRef();
+const FireFlies = () => {
 
-    const positions = useMemo(() => {
-        const arr = [];
-        for (let i = 0; i < count; i++) {
-          const radius = Math.random() * (area / 2);       
-          const theta = Math.random() * 10 * Math.PI;       
-          const phi = Math.acos(2 * Math.random() - 1);    
-      
-          const x = radius * Math.sin(phi) * Math.cos(theta);
-          const y = radius * Math.sin(phi) * Math.sin(theta);
-          const z = radius * Math.cos(phi);
-      
-          arr.push(x, y, z);
-        }
-        return new Float32Array(arr);
-      }, [count, area]);
+    useFrame(() => {
+        fireflies.current.forEach((firefly, idx) => {
+            const time = 0.025 + idx;
+            firefly.position.x += Math.sin(time * 0.3) * 0.01;
+            firefly.position.y += Math.cos(time * 0.4) * 0.01;
+            firefly.position.z += Math.sin(time * 0.2) * 0.01;
+          });
+    })
+    
+    const fireflies = useRef([]);
 
-
-const velocities = useMemo(() => {
-    const arr = [];
-    for (let i = 0; i < count; i++) {
-      arr.push(
-        (Math.random() - 0.5) * 0.02, 
-        (Math.random() - 0.5) * 0.01, 
-        (Math.random() - 0.5) * 0.02
-      );
-    }
-    return arr;
-  }, [count]);
-
-
-  useFrame(() => {
-    const positionsArray = pointsRef.current.geometry.attributes.position.array;
-    for (let i = 0; i < count; i++) {
-      positionsArray[i * 3 + 0] += velocities[i * 3 + 0];
-      positionsArray[i * 3 + 1] += velocities[i * 3 + 1];
-      positionsArray[i * 3 + 2] += velocities[i * 3 + 2];
-
- 
-      for (let j = 0; j < 3; j++) {
-        if (positionsArray[i * 3 + j] > area / 2) velocities[i * 3 + j] *= -1;
-        if (positionsArray[i * 3 + j] < -area / 2) velocities[i * 3 + j] *= -1;
+    const createFireflies = (count) => {
+      const positions = [];
+      for (let i = 0; i < count; i++) {
+        positions.push([
+          (Math.random() - 0.5) * 100, 
+          Math.random() * 13 + 3,
+          (Math.random() - 0.5) * 15, 
+        ]);
       }
-    }
-    pointsRef.current.geometry.attributes.position.needsUpdate = true;
-  });
+      return positions;
+    };
+  
+    const fireflyPositions = createFireflies(200);
+
+
+
+  
 
   return (
    <>
+       {fireflyPositions.map((pos, idx) => (
+        <Float key={idx} speed={1} rotationIntensity={1.5} floatIntensity={2}>
+          <mesh
+            ref={(el) => (fireflies.current[idx] = el)}
+            position={pos}
+            scale={0.04}
+          >
+            <sphereGeometry />
+            <meshStandardMaterial color="#FABC3F" emissive="#FFD700" emissiveIntensity={2} />
+          </mesh>
+          
+        </Float>
+      ))}
    
-   <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={positions.length / 3}
-          array={positions}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        color="#ffff88"
-        size={0.2}
-        sizeAttenuation
-        transparent
-        opacity={0.8}
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
    </>
   )
 }
