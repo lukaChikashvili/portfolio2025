@@ -38,13 +38,27 @@ import { useThree } from '@react-three/fiber';
    }
 
 
+   // show skills camera movement
+   const showSkills = () => {
+    gsap.to(camera.position, {
+  
+    y: -11,
+    duration: 2,
+    ease: 'power2.inOut',
+    
+  });
+
+  
+   }
+
+
   return (
    <>
         <Flag
         texturePath='./projects.png'
         position={[-20, 10, 0]}
         rotation={[-0.2, -0.7, 0]}
-        onclick={showProjects}
+         onclick={showProjects}
       />
 
      <Flag
@@ -58,6 +72,7 @@ import { useThree } from '@react-three/fiber';
         texturePath='./skills.png'
         position={[30, 10, 0]}
         rotation={[0, -0.6, 0]}
+        onclick={showSkills}
       />
 
 <Flag
@@ -65,6 +80,8 @@ import { useThree } from '@react-three/fiber';
         position={[-12, 10, -10]}
         rotation={[0, -0.6, 0]}
       />
+
+
    </>
   )
 }

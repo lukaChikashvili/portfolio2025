@@ -1,15 +1,21 @@
+import { useGLTF } from '@react-three/drei'
 import React from 'react'
 
 const Metro = () => {
+
+   const train = useGLTF('./train.glb');
+
+
   return (
     <>
-        
-            <group position={[0, -18.5, 0]}>
+      
+            <group position={[0, -40, 0]}>
       {/* Floor */}
-      <mesh receiveShadow>
+      <mesh receiveShadow >
         <boxGeometry args={[200, 0.5, 50]} />
         <meshStandardMaterial color="#555" />
       </mesh>
+     
 
       {/* Ceiling */}
       <mesh position={[0, 8, 0]}>
@@ -34,7 +40,11 @@ const Metro = () => {
         <boxGeometry args={[0.5, 10, 50]} />
         <meshStandardMaterial color="#444" />
       </mesh>
+
+      
     </group>
+
+   
     </>
   )
 }

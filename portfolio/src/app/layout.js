@@ -22,10 +22,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main className="h-screen">
+       
+     
         {children}
-        </main>
-      
+       
       </body>
     </html>
   );
