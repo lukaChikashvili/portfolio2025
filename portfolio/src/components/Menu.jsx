@@ -59,9 +59,9 @@ import { useThree } from '@react-three/fiber';
      
     const showProjects = () => {
       gsap.to(camera.position, {
-         x: 16,
+         x: 18,
          y: 15,
-         z: -40,
+         z: -45,
       duration: 2,
       ease: 'power2.inOut',
       onUpdate: () => {

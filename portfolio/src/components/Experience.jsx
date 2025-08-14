@@ -10,6 +10,7 @@ import House from './House'
 import Aquarium from './Aquarium'
 import Metro from './Metro'
 import FireFlies from './FireFlies'
+import Projects from './Projects'
 
 
 const Experience = ({ isNight}) => {
@@ -247,6 +248,9 @@ const Experience = ({ isNight}) => {
 {/* FireFlies */}
 
 <FireFlies />
+
+{/* Projects */}
+<Projects />
     </>
   )
 }
