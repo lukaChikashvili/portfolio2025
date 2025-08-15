@@ -7,17 +7,27 @@ import { clothVertex } from '@/shaders/cloth/vertex';
 import { clothFragment } from '@/shaders/cloth/fragment';
 import * as THREE from 'three'
 
-const ChainGroup = ({ position }) => {
+
+const ChainGroup = ({ position, imageUrl }) => {
     const chain = useGLTF("./chain.glb");
+
+    const texture = useTexture(imageUrl);
+
 
     const uniforms = useRef({
       uTime: { value: 0},
-      uColor: { value: new THREE.Color("#ffffff")}
+      uColor: { value: new THREE.Color("#ffffff")},
+      uAmplitude: { value: 0.2 },
+    uFrequency: { value: new THREE.Vector2(0.5, 0.5) },
+    uSpeed: { value: 1.0 },
+    uTexture: { value: texture}
     });
 
     useFrame(() => {
       uniforms.current.uTime.value += 0.025;
-    })
+    });
+
+    
   
     return (
       <group position={position}>
@@ -27,7 +37,7 @@ const ChainGroup = ({ position }) => {
           position={[0, 0, -0.6]}
         />
         <mesh rotation={[0, -0.4, 0]}>
-          <planeGeometry args={[8, 5]} />
+          <planeGeometry args={[8, 5, 500, 500]} />
           <shaderMaterial vertexShader={clothVertex} 
           fragmentShader={clothFragment} uniforms={uniforms.current}/>
         </mesh>
@@ -35,27 +45,33 @@ const ChainGroup = ({ position }) => {
     );
   };
 
-const Projects = () => {
-  const texture = useTexture('./project.png');
-
-  const { camera } = useThree();
 
 
-  return (
-    <>
-      <ChainGroup position={[20, 12, -55]} />
-      <ChainGroup position={[40, 12, -55]} />
-      <ChainGroup position={[120, 12, -58]} />
-      <ChainGroup position={[90, 15, -63]} />
-      <ChainGroup position={[170, 16, -65]} />
-      <ChainGroup position={[150, 18, -65]} />
-
-      <mesh position={[10,11, -64]} onClick={() => goBack(camera)}>
-         <planeGeometry args = {[7, 2]} />
-          <meshStandardMaterial map = {texture} />
+  const Projects = () => {
+    const projectImages = [
+      "./tamada.png",
+      "./vote.png",
+      "./girl.png"
+    ];
+  
+    const { camera } = useThree();
+  
+    return (
+      <>
+        {projectImages.map((img, i) => (
+          <ChainGroup
+            key={i}
+            position={[20 + i * 20, 12, -55]}
+            imageUrl={img}
+          />
+        ))}
+  
+        <mesh position={[10, 11, -64]} onClick={() => goBack(camera)}>
+          <planeGeometry args={[7, 2]} />
+          <meshStandardMaterial map={useTexture('./project.png')} />
         </mesh>
-    </>
-  )
-}
+      </>
+    );
+  };
 
-export default Projects
+  export default Projects;
