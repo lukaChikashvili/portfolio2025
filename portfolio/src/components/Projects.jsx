@@ -9,6 +9,7 @@ import gsap from 'gsap'
 import ProjectName from './ProjectName';
 
 const ChainGroup = forwardRef(({ position, imageUrl }, ref) => {
+  
   const chain = useGLTF("./chain.glb");
   const texture = useTexture(imageUrl);
 
@@ -57,8 +58,34 @@ const ChainGroup = forwardRef(({ position, imageUrl }, ref) => {
 const Projects = ({chainRefs}) => {
   const { camera } = useThree();
 
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [textureOpacity, setTextureOpacity] = useState(1);
+
   const nextBtn = useRef();
   const prevBtn = useRef();
+
+  const changeTexture = (newIndex) => {
+   
+    gsap.to({ opacity: 1 }, {
+      opacity: 0,
+      duration: 0.3,
+      onUpdate: function() {
+        setTextureOpacity(this.targets()[0].opacity);
+      },
+      onComplete: () => {
+        setCurrentIndex(newIndex);
+       
+        gsap.to({ opacity: 0 }, {
+          opacity: 1,
+          duration: 0.3,
+          onUpdate: function() {
+            setTextureOpacity(this.targets()[0].opacity);
+          }
+        });
+      }
+    });
+  };
 
 
   const projectImages = [
@@ -76,6 +103,20 @@ const Projects = ({chainRefs}) => {
     "./vanga.png",
 
   ];
+
+  const projectNames = [
+    "./tamadaTitle.png",
+    "./fakeTitle.png",
+    "./girlTitle.png",
+    "./neoTitle.png",
+    "./mixTitle.png",
+    "./tamadaTitle.png",
+    "./tamadaTitle.png",
+    "./tamadaTitle.png",
+     "./tamadaTitle.png",
+  ];
+
+
 
   const [images, setImages] = useState(projectImages);
 
@@ -115,12 +156,17 @@ const Projects = ({chainRefs}) => {
   };
 
   const handleNext = () => {
-    chainRefs.current.forEach((ref) => {
-      if (ref) {
+
+    const nextIndex = (currentIndex + 1) % projectNames.length;
+    changeTexture(nextIndex);
+
+
+     chainRefs.current.forEach((ref) => {
+      if (ref && ref.position) {
         gsap.to(ref.position, {
-          x: ref.position.x - 20, 
+          x: ref.position.x - 20,
           duration: 1,
-          ease: "power2.inOut"
+          ease: "power2.inOut",
         });
       }
     });
@@ -133,6 +179,10 @@ const Projects = ({chainRefs}) => {
 
 
   const handlePrev = () => {
+
+    const nextIndex = (currentIndex - 1) % projectNames.length;
+    changeTexture(nextIndex);
+    
     chainRefs.current.forEach((ref) => {
       if (ref) {
         gsap.to(ref.position, {
@@ -175,7 +225,7 @@ const Projects = ({chainRefs}) => {
         <meshStandardMaterial color="orange" />
       </mesh>
 
-      <ProjectName />
+      <ProjectName textureUrl={projectNames[currentIndex]} />
     </>
   );
 };

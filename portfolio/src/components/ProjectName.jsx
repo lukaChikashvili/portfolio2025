@@ -1,17 +1,20 @@
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, useTexture } from '@react-three/drei'
 import React from 'react'
 
-const ProjectName = () => {
+const ProjectName = ({ textureUrl }) => {
     const model = useGLTF('./wood_signal.glb');
+
+    const texture = useTexture(textureUrl);
 
   return (
     <>
-    <group position = {[16, 10.5, -50]} >
+    <group position = {[17, 10.5, -49]} >
 
-       <mesh position={[0.05, 1.3, 0.13]}>
-          <planeGeometry args = {[1.6, 0.3 ]} />
+       <mesh position={[0.05, 1.9, 0.18]}>
+          <planeGeometry args = {[2.3, 0.5 ]} />
+          <meshStandardMaterial map = {texture} />
        </mesh>
-       <primitive object={model.scene} scale = {1.5} />
+       <primitive object={model.scene} scale = {2.2} />
        </group>
     </>
   )
