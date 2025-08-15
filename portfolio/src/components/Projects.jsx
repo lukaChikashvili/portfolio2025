@@ -65,6 +65,8 @@ const Projects = ({chainRefs}) => {
   const nextBtn = useRef();
   const prevBtn = useRef();
 
+  
+
   const changeTexture = (newIndex) => {
    
     gsap.to({ opacity: 1 }, {
@@ -110,17 +112,20 @@ const Projects = ({chainRefs}) => {
     "./girlTitle.png",
     "./neoTitle.png",
     "./mixTitle.png",
-    "./tamadaTitle.png",
-    "./tamadaTitle.png",
-    "./tamadaTitle.png",
-     "./tamadaTitle.png",
+    "./blogTitle.png",
+    "./flowTitle.png",
+    "./baiaTitle.png",
+     "./cigarTitle.png",
+     "./paradiseTitle.png",
+     "./planetTitle.png",
+     "./vangaTitle.png"
   ];
 
 
 
   const [images, setImages] = useState(projectImages);
 
- 
+  const projectRef = useRef();
 
 
   const initialPositions = [
@@ -138,6 +143,36 @@ const Projects = ({chainRefs}) => {
     [240, 52, -55]
   ];
 
+  const signBoardAnimation = () => {
+    if (!projectRef.current) return;
+  
+    const originalRotation = projectRef.current.rotation.y;
+  
+    gsap.to(projectRef.current.rotation, {
+      y: originalRotation + 6.5, 
+      duration: 0.5,
+      ease: "circ.inOut",
+      yoyo: true,
+      repeat: 1 
+    });
+  };
+
+  const signBoardAnimationBack = () => {
+    if (!projectRef.current) return;
+  
+    const originalRotation = projectRef.current.rotation.y;
+  
+    gsap.to(projectRef.current.rotation, {
+      y: originalRotation - 6.5, 
+      duration: 0.5,
+      ease: "circ.inOut",
+      yoyo: true,
+      repeat: 1 
+    });
+  }
+
+
+
   const buttonEffect = (btnRef) => {
     if (btnRef && btnRef.current) {
       gsap.to(btnRef.current.position, {
@@ -154,6 +189,8 @@ const Projects = ({chainRefs}) => {
       });
     }
   };
+
+
 
   const handleNext = () => {
 
@@ -173,6 +210,7 @@ const Projects = ({chainRefs}) => {
 
     buttonEffect(prevBtn);
 
+     signBoardAnimation();
     
   
   };
@@ -194,7 +232,12 @@ const Projects = ({chainRefs}) => {
     });
 
     buttonEffect(nextBtn);
+
+    signBoardAnimationBack();
   }
+
+
+
 
   return (
     <>
@@ -225,7 +268,7 @@ const Projects = ({chainRefs}) => {
         <meshStandardMaterial color="orange" />
       </mesh>
 
-      <ProjectName textureUrl={projectNames[currentIndex]} />
+      <ProjectName projectNameRef={projectRef} textureUrl={projectNames[currentIndex]} />
     </>
   );
 };
