@@ -42,7 +42,7 @@ export default function Home() {
         <Physics>
           <Lights isNight={isNight} />
           <Experience isNight={isNight}/>
-          <CameraDebugger />
+         
           
         </Physics>
       </Canvas>
