@@ -6,6 +6,7 @@ import { clothVertex } from '@/shaders/cloth/vertex';
 import { clothFragment } from '@/shaders/cloth/fragment';
 import * as THREE from 'three'
 import gsap from 'gsap'
+import ProjectName from './ProjectName';
 
 const ChainGroup = forwardRef(({ position, imageUrl }, ref) => {
   const chain = useGLTF("./chain.glb");
@@ -173,6 +174,8 @@ const Projects = ({chainRefs}) => {
         <boxGeometry args={[3, 1]} />
         <meshStandardMaterial color="orange" />
       </mesh>
+
+      <ProjectName />
     </>
   );
 };

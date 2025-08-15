@@ -7,5 +7,7 @@ export const goBack = (camera) => {
       z: 23,
       duration: 2,
       ease: 'power2.inOut',
+      
+      
     });
   };
