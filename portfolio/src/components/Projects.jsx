@@ -1,5 +1,5 @@
 import { useGLTF, useTexture } from '@react-three/drei'
-import React, { useRef, useState, forwardRef } from 'react'
+import React, { useRef, useState, forwardRef, useImperativeHandle } from 'react'
 import { goBack } from './GoBack';
 import { useFrame, useThree } from '@react-three/fiber';
 import { clothVertex } from '@/shaders/cloth/vertex';
@@ -10,6 +10,11 @@ import gsap from 'gsap'
 const ChainGroup = forwardRef(({ position, imageUrl }, ref) => {
   const chain = useGLTF("./chain.glb");
   const texture = useTexture(imageUrl);
+
+
+
+
+
 
   const uniforms = useRef({
     uTime: { value: 0 },
@@ -24,15 +29,20 @@ const ChainGroup = forwardRef(({ position, imageUrl }, ref) => {
     uniforms.current.uTime.value += 0.025;
   });
 
+
+
+
+  
+
   return (
-    <group ref={ref} position={position}>
+    <group ref={ref} position={position}   >
       <primitive
         object={chain.scene.clone()}
         scale={0.3}
         position={[0, 0, -0.6]}
       />
-      <mesh rotation={[0, -0.4, 0]}>
-        <planeGeometry args={[8, 5, 500, 500]} />
+      <mesh rotation={[0, -0.4, 0]} >
+        <planeGeometry args={[10, 5, 500, 500]} />
         <shaderMaterial
           vertexShader={clothVertex}
           fragmentShader={clothFragment}
@@ -43,27 +53,65 @@ const ChainGroup = forwardRef(({ position, imageUrl }, ref) => {
   );
 });
 
-const Projects = () => {
+const Projects = ({chainRefs}) => {
   const { camera } = useThree();
+
+  const nextBtn = useRef();
+  const prevBtn = useRef();
+
 
   const projectImages = [
     "./tamada.png",
     "./vote.png",
-    "./girl.png"
+    "./girl.png",
+    "./neo.png",
+    "./mix.png",
+    "./blog.png",
+    "./flow.png",
+    "./baia.png",
+    "./cigar.png",
+    "./funeral.png",
+    "./planet.png",
+    "./vanga.png",
+
   ];
 
   const [images, setImages] = useState(projectImages);
 
-  const chainRefs = useRef([]);
+ 
+
 
   const initialPositions = [
-    [20, 12, -55],
-    [40, 12, -55],
-    [60, 12, -55],
-    [80, 12, -55],
-    [100, 12, -55],
-    [120, 12, -55]
+    [20, 52, -55],
+    [40, 52, -55],
+    [60, 52, -55],
+    [80, 52, -55],
+    [100, 52, -55],
+    [120, 52, -55],
+    [140, 52, -55],
+    [160, 52, -55],
+    [180, 52, -55],
+    [200, 52, -55],
+    [220, 52, -55],
+    [240, 52, -55]
   ];
+
+  const buttonEffect = (btnRef) => {
+    if (btnRef && btnRef.current) {
+      gsap.to(btnRef.current.position, {
+        y: btnRef.current.position.y - 0.5,
+        duration: 0.15,
+        ease: "power1.in",
+        onComplete: () => {
+          gsap.to(btnRef.current.position, {
+            y: btnRef.current.position.y + 0.5,
+            duration: 0.25,
+            ease: "bounce.out"
+          });
+        }
+      });
+    }
+  };
 
   const handleNext = () => {
     chainRefs.current.forEach((ref) => {
@@ -75,6 +123,8 @@ const Projects = () => {
         });
       }
     });
+
+    buttonEffect(prevBtn);
 
     
   
@@ -91,6 +141,8 @@ const Projects = () => {
         });
       }
     });
+
+    buttonEffect(nextBtn);
   }
 
   return (
@@ -111,14 +163,14 @@ const Projects = () => {
       </mesh>
 
       {/* Next button */}
-      <mesh position={[20, 10, -50]} onClick={handleNext}>
-        <planeGeometry args={[3, 1]} />
+      <mesh ref = {nextBtn} position={[24, 7, -49]} onClick={handlePrev}>
+        <boxGeometry args={[3, 1]} />
         <meshStandardMaterial color="orange" />
       </mesh>
 
         {/* prev button */}
-        <mesh position={[24, 10, -50]} onClick={handlePrev}>
-        <planeGeometry args={[3, 1]} />
+        <mesh ref = {prevBtn} position={[28, 7, -49]} onClick={handleNext}>
+        <boxGeometry args={[3, 1]} />
         <meshStandardMaterial color="orange" />
       </mesh>
     </>

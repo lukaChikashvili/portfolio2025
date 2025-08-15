@@ -1,12 +1,15 @@
 
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import Flag from './Flag';
 import gsap from 'gsap'
 import { useThree } from '@react-three/fiber';
 
- const Menu = () => {
+const Menu = ({ chainRefs }) => {
      
     const { camera } = useThree();
+
+  
+
 
     const fixedRotation = camera.rotation.clone();
 
@@ -66,8 +69,31 @@ import { useThree } from '@react-three/fiber';
       ease: 'power2.inOut',
       onUpdate: () => {
         camera.rotation.copy(fixedRotation);
+      },
+
+      onComplete: () => {
+        
+        chainRefs.current.forEach(ref => {
+            gsap.to(ref.position, {
+              y: 12,
+              duration: 1.2,
+              ease: 'power2.inOut',
+              
+              stagger: {
+                from: "start",
+                amount: 1,
+                ease: 'power2.inOut',
+              }
+
+            }) 
+        });
       }
     });
+
+
+ 
+
+
 
     
     }

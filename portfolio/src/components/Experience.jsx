@@ -17,6 +17,8 @@ const Experience = ({ isNight}) => {
 
     const shaderRef = useRef();
 
+    const chainRefs = useRef([]);
+
 
     const grassUniforms = useRef({
         uTime: { value: 0},
@@ -151,7 +153,7 @@ const Experience = ({ isNight}) => {
     
   return (
     <>
-   
+     
        <Environment preset="forest"  />
 
        {/* Grass Field */}
@@ -218,7 +220,7 @@ const Experience = ({ isNight}) => {
   <Smoke />
 
    {/* Menu Flags */}
-   <Menu />
+   <Menu chainRefs={chainRefs} />
    <Stars radius={100} depth={50} count={1300} factor={4} saturation={0} fade  />
 
   
@@ -250,7 +252,7 @@ const Experience = ({ isNight}) => {
 <FireFlies />
 
 {/* Projects */}
-<Projects />
+<Projects chainRefs={chainRefs} />
     </>
   )
 }
