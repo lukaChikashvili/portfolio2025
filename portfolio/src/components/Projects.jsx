@@ -1,11 +1,23 @@
 import { useGLTF, useTexture } from '@react-three/drei'
-import React from 'react'
+import React, { useRef } from 'react'
 import Flag from './Flag';
 import { goBack } from './GoBack';
-import { useThree } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
+import { clothVertex } from '@/shaders/cloth/vertex';
+import { clothFragment } from '@/shaders/cloth/fragment';
+import * as THREE from 'three'
 
 const ChainGroup = ({ position }) => {
     const chain = useGLTF("./chain.glb");
+
+    const uniforms = useRef({
+      uTime: { value: 0},
+      uColor: { value: new THREE.Color("#ffffff")}
+    });
+
+    useFrame(() => {
+      uniforms.current.uTime.value += 0.025;
+    })
   
     return (
       <group position={position}>
@@ -16,7 +28,8 @@ const ChainGroup = ({ position }) => {
         />
         <mesh rotation={[0, -0.4, 0]}>
           <planeGeometry args={[8, 5]} />
-          <meshStandardMaterial color="white" />
+          <shaderMaterial vertexShader={clothVertex} 
+          fragmentShader={clothFragment} uniforms={uniforms.current}/>
         </mesh>
       </group>
     );
