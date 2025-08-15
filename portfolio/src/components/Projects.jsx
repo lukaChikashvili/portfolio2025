@@ -1,5 +1,8 @@
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, useTexture } from '@react-three/drei'
 import React from 'react'
+import Flag from './Flag';
+import { goBack } from './GoBack';
+import { useThree } from '@react-three/fiber';
 
 const ChainGroup = ({ position }) => {
     const chain = useGLTF("./chain.glb");
@@ -20,6 +23,9 @@ const ChainGroup = ({ position }) => {
   };
 
 const Projects = () => {
+  const texture = useTexture('./project.png');
+
+  const { camera } = useThree();
 
 
   return (
@@ -30,6 +36,11 @@ const Projects = () => {
       <ChainGroup position={[90, 15, -63]} />
       <ChainGroup position={[170, 16, -65]} />
       <ChainGroup position={[150, 18, -65]} />
+
+      <mesh position={[10,11, -64]} onClick={() => goBack(camera)}>
+         <planeGeometry args = {[7, 2]} />
+          <meshStandardMaterial map = {texture} />
+        </mesh>
     </>
   )
 }

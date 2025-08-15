@@ -28,7 +28,7 @@ const FireFlies = () => {
       return positions;
     };
   
-    const fireflyPositions = createFireflies(200);
+    const fireflyPositions = createFireflies(400);
 
 
 
