@@ -68,16 +68,18 @@ const Projects = ({chainRefs}) => {
   
 
   const changeTexture = (newIndex) => {
-   
-    gsap.to({ opacity: 1 }, {
+    
+    gsap.to({ opacity: textureOpacity }, {
       opacity: 0,
       duration: 0.3,
       onUpdate: function() {
         setTextureOpacity(this.targets()[0].opacity);
       },
       onComplete: () => {
-        setCurrentIndex(newIndex);
        
+        setCurrentIndex(newIndex);
+  
+        
         gsap.to({ opacity: 0 }, {
           opacity: 1,
           duration: 0.3,
@@ -88,7 +90,6 @@ const Projects = ({chainRefs}) => {
       }
     });
   };
-
 
   const projectImages = [
     "./tamada.png",
@@ -126,6 +127,12 @@ const Projects = ({chainRefs}) => {
   const [images, setImages] = useState(projectImages);
 
   const projectRef = useRef();
+
+  // audio
+  const woodSound = new Audio('./wood.mp3');
+  const curtain = new Audio('./curtain.mp3');
+  const click = new Audio('./click.mp3');
+
 
 
   const initialPositions = [
@@ -204,6 +211,7 @@ const Projects = ({chainRefs}) => {
           x: ref.position.x - 20,
           duration: 1,
           ease: "power2.inOut",
+         
         });
       }
     });
@@ -211,6 +219,11 @@ const Projects = ({chainRefs}) => {
     buttonEffect(prevBtn);
 
      signBoardAnimation();
+
+
+     woodSound.play();
+     curtain.play();
+     click.play();
     
   
   };
@@ -226,7 +239,8 @@ const Projects = ({chainRefs}) => {
         gsap.to(ref.position, {
           x: ref.position.x + 20, 
           duration: 1,
-          ease: "power2.inOut"
+          ease: "power2.inOut",
+          
         });
       }
     });
@@ -234,10 +248,15 @@ const Projects = ({chainRefs}) => {
     buttonEffect(nextBtn);
 
     signBoardAnimationBack();
+
+    woodSound.play();
+    curtain.play();
+    click.play();
   }
 
 
-
+const rightArrow = useTexture('./arrowRight.png');
+const leftArrow = useTexture('./arrowLeft.png');
 
   return (
     <>
@@ -257,15 +276,16 @@ const Projects = ({chainRefs}) => {
       </mesh>
 
       {/* Next button */}
-      <mesh ref = {nextBtn} position={[24, 7, -49]} onClick={handlePrev}>
+
+      <mesh ref = {nextBtn} position={[24, 7, -48]} onClick={handlePrev}>
         <boxGeometry args={[3, 1]} />
-        <meshStandardMaterial color="orange" />
+        <meshBasicMaterial map = {leftArrow} />
       </mesh>
 
         {/* prev button */}
-        <mesh ref = {prevBtn} position={[28, 7, -49]} onClick={handleNext}>
+        <mesh ref = {prevBtn} position={[28, 7, -48]} onClick={handleNext}>
         <boxGeometry args={[3, 1]} />
-        <meshStandardMaterial color="orange" />
+        <meshBasicMaterial map = {rightArrow} />
       </mesh>
 
       <ProjectName projectNameRef={projectRef} textureUrl={projectNames[currentIndex]} />
