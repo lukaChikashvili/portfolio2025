@@ -168,7 +168,42 @@ const Projects = ({chainRefs}) => {
       yoyo: true,
       repeat: 1 
     });
+
+
+   
+    
   };
+
+
+  const signBoardAnimationDown = () => {
+    if (!projectRef.current) return;
+  
+  
+    gsap.to(projectRef.current.position, {
+      y: projectRef.current.position.y - 10, 
+      duration: 0.5,
+      ease: "power3.inOut",
+    
+    });
+
+  
+
+  }
+
+  const signBoardAnimationUp = () => {
+    if (!projectRef.current) return;
+  
+  
+    gsap.to(projectRef.current.position, {
+      y: projectRef.current.position.y + 10, 
+      duration: 0.5,
+      ease: "power3.inOut",
+    
+    });
+
+  
+
+  }
 
   const signBoardAnimationBack = () => {
     if (!projectRef.current) return;
@@ -293,6 +328,7 @@ const leftArrow = useTexture('./arrowLeft.png');
         index,
         position: chainPos
       });
+      signBoardAnimationDown();
 
       if (boardRef.current) {
         
@@ -303,8 +339,16 @@ const leftArrow = useTexture('./arrowLeft.png');
           ease: "power2.out"
         });
       }
+     
+ 
     }
+
+   
+   
   });
+
+
+
 };
 
 // hide info board
@@ -326,6 +370,7 @@ const hideInfo = (index, onHidden) => {
       duration: 1,
       ease: "power2.in",
       onComplete: () => {
+        signBoardAnimationUp();
         setSelectedProject(null);
         if (onHidden) onHidden();
       }
@@ -341,20 +386,29 @@ const hideInfo = (index, onHidden) => {
 {selectedProject !== null && (
   <InfoBoard
     ref={boardRef}
-    onClick={() => hideInfo(selectedProject.index)}
+    onClick={(e) => {
+      e.stopPropagation();
+      e.preventDefault?.();
+      hideInfo(selectedProject.index);
+    }}
     textureUrl={projectNames[selectedProject.index]}
     position={[selectedProject.position.x, selectedProject.position.y, selectedProject.position.z]}
   />
 )}
 
 
-      {images.map((img, i) => (
+      {projectImages.map((img, i) => (
         <ChainGroup
           key={i}
           ref={(el) => (chainRefs.current[i] = el)}
           position={initialPositions[i]}
           imageUrl={img}
-          onClick = {() => showInfo(i)}
+          onClick={(e) => {
+            e.stopPropagation();
+            e.nativeEvent.stopImmediatePropagation();
+            e.preventDefault?.();
+            showInfo(i);
+          }}
         />
       ))}
 
