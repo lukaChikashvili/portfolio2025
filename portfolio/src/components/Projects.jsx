@@ -8,6 +8,7 @@ import * as THREE from 'three'
 import gsap from 'gsap'
 import ProjectName from './ProjectName';
 import InfoBoard from './InfoBoard';
+import Description from './Description';
 
 const ChainGroup = forwardRef(({ position, imageUrl, onClick }, ref) => {
   
@@ -132,6 +133,8 @@ const Projects = ({chainRefs}) => {
 
   const [images, setImages] = useState(projectImages);
 
+  const descRef = useRef();
+
   const projectRef = useRef();
 
   // audio
@@ -156,6 +159,7 @@ const Projects = ({chainRefs}) => {
     [240, 52, -55]
   ];
 
+  // board animations
   const signBoardAnimation = () => {
     if (!projectRef.current) return;
   
@@ -219,6 +223,22 @@ const Projects = ({chainRefs}) => {
     });
   }
 
+  // description animation
+  const descAnimation = () => {
+    gsap.to(descRef.current.position, {
+       y: 6,
+       duration: 1,
+       ease: "power1.inOut"
+    })
+  }
+
+  const descAnimationBack = () => {
+    gsap.to(descRef.current.position, {
+      y: 40,
+      duration: 1,
+      ease: "power1.inOut"
+   })
+  }
 
 
   const buttonEffect = (btnRef) => {
@@ -329,6 +349,7 @@ const leftArrow = useTexture('./arrowLeft.png');
         position: chainPos
       });
       signBoardAnimationDown();
+      descAnimation();
 
       if (boardRef.current) {
         
@@ -371,6 +392,7 @@ const hideInfo = (index, onHidden) => {
       ease: "power2.in",
       onComplete: () => {
         signBoardAnimationUp();
+        descAnimationBack();
         setSelectedProject(null);
         if (onHidden) onHidden();
       }
@@ -379,6 +401,9 @@ const hideInfo = (index, onHidden) => {
     if (onHidden) onHidden();
   }
 }
+
+
+
 
   return (
     <>
@@ -432,6 +457,8 @@ const hideInfo = (index, onHidden) => {
       </mesh>
 
       <ProjectName projectNameRef={projectRef} textureUrl={projectNames[currentIndex]} />
+
+      <Description ref = {descRef} />
     </>
   );
 };
