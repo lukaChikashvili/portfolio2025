@@ -7,6 +7,7 @@ import { clothFragment } from '@/shaders/cloth/fragment';
 import * as THREE from 'three'
 import gsap from 'gsap'
 import ProjectName from './ProjectName';
+import InfoBoard from './InfoBoard';
 
 const ChainGroup = forwardRef(({ position, imageUrl, onClick }, ref) => {
   
@@ -57,6 +58,9 @@ const ChainGroup = forwardRef(({ position, imageUrl, onClick }, ref) => {
 
 const Projects = ({chainRefs}) => {
   const { camera } = useThree();
+
+  const boardRef = useRef();
+
 
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -202,80 +206,158 @@ const Projects = ({chainRefs}) => {
 
 
   const handleNext = () => {
-
     const nextIndex = (currentIndex + 1) % projectNames.length;
-    changeTexture(nextIndex);
+  
+    if (selectedProject !== null) {
+      
+      hideInfo(selectedProject.index, () => {
+        gsap.delayedCall(0.3, () => { 
+          moveChains(-20); 
+          changeTexture(nextIndex);
+          buttonEffect(prevBtn);
+          signBoardAnimation();
+          woodSound.play();
+          curtain.play();
+          click.play();
+        });
+      });
+    } else {
+      moveChains(-20);
+      changeTexture(nextIndex);
+      buttonEffect(prevBtn);
+      signBoardAnimation();
+      woodSound.play();
+      curtain.play();
+      click.play();
+    }
+  };
 
-
-     chainRefs.current.forEach((ref) => {
+  const moveChains = (xOffset) => {
+    chainRefs.current.forEach((ref) => {
       if (ref && ref.position) {
         gsap.to(ref.position, {
-          x: ref.position.x - 20,
+          x: ref.position.x + xOffset,
           duration: 1,
           ease: "power2.inOut",
-         
         });
       }
     });
-
-    buttonEffect(prevBtn);
-
-     signBoardAnimation();
-
-
-     woodSound.play();
-     curtain.play();
-     click.play();
-    
-  
   };
 
 
   const handlePrev = () => {
-
-    const nextIndex = (currentIndex - 1) % projectNames.length;
-    changeTexture(nextIndex);
-    
-    chainRefs.current.forEach((ref) => {
-      if (ref) {
-        gsap.to(ref.position, {
-          x: ref.position.x + 20, 
-          duration: 1,
-          ease: "power2.inOut",
-          
+    const nextIndex = (currentIndex - 1 + projectNames.length) % projectNames.length;
+  
+    if (selectedProject !== null) {
+      hideInfo(selectedProject.index, () => {
+        gsap.delayedCall(0.3, () => {
+          moveChains(20); 
+          changeTexture(nextIndex);
+          buttonEffect(nextBtn);
+          signBoardAnimationBack();
+          woodSound.play();
+          curtain.play();
+          click.play();
         });
-      }
-    });
-
-    buttonEffect(nextBtn);
-
-    signBoardAnimationBack();
-
-    woodSound.play();
-    curtain.play();
-    click.play();
-  }
-
-
+      });
+    } else {
+      moveChains(20); 
+      changeTexture(nextIndex);
+      buttonEffect(nextBtn);
+      signBoardAnimationBack();
+      woodSound.play();
+      curtain.play();
+      click.play();
+    }
+  };
 const rightArrow = useTexture('./arrowRight.png');
 const leftArrow = useTexture('./arrowLeft.png');
 
 
+
+
  // show project info
  const showInfo = (index) => {
-    console.log(chainRefs.current[index])
+  const chain = chainRefs.current[index];
 
-    gsap.to(chainRefs.current[index].position, {
-      y: chainRefs.current[index].position.y + 20,
-      duration: 1,
-      ease: "power2.inOut"
-    })
- }
+  if (!chain) return;
 
+
+
+  const chainPos = chain.position.clone();
+
+  gsap.to(chain.position, {
+    y: chain.position.y + 20,
+    duration: 1,
+    ease: "power2.inOut",
+    onComplete: () => {
+      setSelectedProject({
+        index,
+        position: chainPos 
+      })
+
+      if (boardRef.current) {
+        boardRef.current.scale.set(0.1, 0.1, 0.1)
+        gsap.to(boardRef.current.scale, {
+          x: 1,
+          y: 1,
+          z: 1,
+          duration: 1,
+          ease: "back.out(1.7)"
+        })
+      }
+    }
+  })
+}
+
+// hide info board
+
+
+const hideInfo = (index, onHidden) => {
+  const chain = chainRefs.current[index];
+  if (!chain) return;
+
+  gsap.to(chain.position, {
+    y: chain.position.y - 20,
+    duration: 1,
+    ease: "power2.inOut",
+    delay: 2,
+    onComplete: () => {
+      if (boardRef.current) {
+        gsap.to(boardRef.current.scale, {
+          x: 0,
+          y: 0,
+          z: 0,
+          duration: 0.5,
+          ease: "power1.out",
+          
+          onComplete: () => {
+            setSelectedProject(null);
+            if (onHidden) onHidden(); 
+          }
+        })
+      } else {
+        setSelectedProject(null);
+        if (onHidden) onHidden();
+      }
+    }
+  })
+}
 
 
   return (
     <>
+
+{selectedProject !== null && (
+  <InfoBoard
+    ref={boardRef}
+    onClick={() => hideInfo(selectedProject.index)}
+    textureUrl={projectNames[selectedProject.index]}
+    position={[selectedProject.position.x, selectedProject.position.y, selectedProject.position.z]}
+  />
+)}
+
+
       {images.map((img, i) => (
         <ChainGroup
           key={i}
