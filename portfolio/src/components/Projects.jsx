@@ -279,12 +279,10 @@ const leftArrow = useTexture('./arrowLeft.png');
  // show project info
  const showInfo = (index) => {
   const chain = chainRefs.current[index];
-
   if (!chain) return;
 
-
-
   const chainPos = chain.position.clone();
+
 
   gsap.to(chain.position, {
     y: chain.position.y + 20,
@@ -293,22 +291,21 @@ const leftArrow = useTexture('./arrowLeft.png');
     onComplete: () => {
       setSelectedProject({
         index,
-        position: chainPos 
-      })
+        position: chainPos
+      });
 
       if (boardRef.current) {
-        boardRef.current.scale.set(0.1, 0.1, 0.1)
-        gsap.to(boardRef.current.scale, {
-          x: 1,
-          y: 1,
-          z: 1,
-          duration: 1,
-          ease: "back.out(1.7)"
-        })
+        
+        boardRef.current.position.y = chain.position.y + 20; 
+        gsap.to(boardRef.current.position, {
+          y: chain.position.y,  
+          duration: 2,
+          ease: "power2.out"
+        });
       }
     }
-  })
-}
+  });
+};
 
 // hide info board
 
@@ -320,30 +317,23 @@ const hideInfo = (index, onHidden) => {
   gsap.to(chain.position, {
     y: chain.position.y - 20,
     duration: 1,
-    ease: "power2.inOut",
-    delay: 2,
-    onComplete: () => {
-      if (boardRef.current) {
-        gsap.to(boardRef.current.scale, {
-          x: 0,
-          y: 0,
-          z: 0,
-          duration: 0.5,
-          ease: "power1.out",
-          
-          onComplete: () => {
-            setSelectedProject(null);
-            if (onHidden) onHidden(); 
-          }
-        })
-      } else {
+    ease: "power2.inOut"
+  });
+
+  if (boardRef.current) {
+    gsap.to(boardRef.current.position, {
+      y: chain.position.y - 10,
+      duration: 1,
+      ease: "power2.in",
+      onComplete: () => {
         setSelectedProject(null);
         if (onHidden) onHidden();
       }
-    }
-  })
+    });
+  } else {
+    if (onHidden) onHidden();
+  }
 }
-
 
   return (
     <>
