@@ -8,7 +8,7 @@ import * as THREE from 'three'
 import gsap from 'gsap'
 import ProjectName from './ProjectName';
 
-const ChainGroup = forwardRef(({ position, imageUrl }, ref) => {
+const ChainGroup = forwardRef(({ position, imageUrl, onClick }, ref) => {
   
   const chain = useGLTF("./chain.glb");
   const texture = useTexture(imageUrl);
@@ -37,7 +37,7 @@ const ChainGroup = forwardRef(({ position, imageUrl }, ref) => {
   
 
   return (
-    <group ref={ref} position={position}   >
+    <group ref={ref} position={position} onClick={onClick}   >
       <primitive
         object={chain.scene.clone()}
         scale={0.3}
@@ -61,6 +61,8 @@ const Projects = ({chainRefs}) => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [textureOpacity, setTextureOpacity] = useState(1);
+
+  const [selectedProject, setSelectedProject] = useState(null); 
 
   const nextBtn = useRef();
   const prevBtn = useRef();
@@ -258,6 +260,20 @@ const Projects = ({chainRefs}) => {
 const rightArrow = useTexture('./arrowRight.png');
 const leftArrow = useTexture('./arrowLeft.png');
 
+
+ // show project info
+ const showInfo = (index) => {
+    console.log(chainRefs.current[index])
+
+    gsap.to(chainRefs.current[index].position, {
+      y: chainRefs.current[index].position.y + 20,
+      duration: 1,
+      ease: "power2.inOut"
+    })
+ }
+
+
+
   return (
     <>
       {images.map((img, i) => (
@@ -266,6 +282,7 @@ const leftArrow = useTexture('./arrowLeft.png');
           ref={(el) => (chainRefs.current[i] = el)}
           position={initialPositions[i]}
           imageUrl={img}
+          onClick = {() => showInfo(i)}
         />
       ))}
 
