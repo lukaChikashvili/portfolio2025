@@ -57,7 +57,7 @@ const ChainGroup = forwardRef(({ position, imageUrl, onClick }, ref) => {
   );
 });
 
-const Projects = ({chainRefs}) => {
+const Projects = ({chainRefs, descRef, onShowOverlay}) => {
   const { camera } = useThree();
 
   const boardRef = useRef();
@@ -133,7 +133,7 @@ const Projects = ({chainRefs}) => {
 
   const [images, setImages] = useState(projectImages);
 
-  const descRef = useRef();
+
 
   const projectRef = useRef();
 
@@ -225,6 +225,7 @@ const Projects = ({chainRefs}) => {
 
   // description animation
   const descAnimation = () => {
+   
     gsap.to(descRef.current.position, {
        y: 6,
        duration: 1,
@@ -458,7 +459,7 @@ const hideInfo = (index, onHidden) => {
 
       <ProjectName projectNameRef={projectRef} textureUrl={projectNames[currentIndex]} />
 
-      <Description ref = {descRef} />
+      <Description ref = {descRef} onShowOverlay={onShowOverlay}  />
     </>
   );
 };

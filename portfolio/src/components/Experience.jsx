@@ -13,7 +13,7 @@ import FireFlies from './FireFlies'
 import Projects from './Projects'
 
 
-const Experience = ({ isNight}) => {
+const Experience = ({ isNight, descRef, onShowOverlay}) => {
 
     const shaderRef = useRef();
 
@@ -149,11 +149,10 @@ const Experience = ({ isNight}) => {
 
 
 
-
-    
+     
   return (
     <>
-     
+
        <Environment preset="forest"  />
 
        {/* Grass Field */}
@@ -252,7 +251,7 @@ const Experience = ({ isNight}) => {
 <FireFlies />
 
 {/* Projects */}
-<Projects chainRefs={chainRefs} />
+<Projects chainRefs={chainRefs} descRef={descRef} onShowOverlay={onShowOverlay}   />
     </>
   )
 }
