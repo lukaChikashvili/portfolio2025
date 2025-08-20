@@ -4,10 +4,11 @@ import Lights from "@/components/Lights";
 import { Canvas, useThree } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Moon, Sun } from "lucide-react";
-import { useRef, useState, forwardRef, useImperativeHandle, useEffect } from "react";
+import { useRef, useState, forwardRef, useImperativeHandle, useEffect, useContext } from "react";
 import * as THREE from "three";
 import gsap from "gsap";
 import ProjectDescription from "@/components/ProjectDescription";
+import { UserContext } from "@/context/UserContext";
 
 
 const CameraController = forwardRef((props, ref) => {
@@ -42,6 +43,8 @@ export default function Home() {
   const descRef = useRef();
   const cameraRef = useRef();
 
+  const { selectedProject, setSelectedProject } = useContext(UserContext);
+
   const toggleDayNight = () => setIsNight(!isNight);
 
   const closeOverlay = () => {
@@ -67,7 +70,7 @@ export default function Home() {
     }
   }, [showOverlay]);
 
-  const [selectedProject, setSelectedProject] = useState(null); 
+  
 
   return (
     <>
