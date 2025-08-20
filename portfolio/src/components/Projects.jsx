@@ -351,6 +351,8 @@ const leftArrow = useTexture('./arrowLeft.png');
         position: chainPos,
         title: ProjectList[index].title,
         description: ProjectList[index].description,
+        number: ProjectList[index].number,
+        stack: ProjectList[index].stack
 
 
       });

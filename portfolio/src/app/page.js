@@ -112,7 +112,7 @@ export default function Home() {
             ✕
           </button>
 
-          <ProjectDescription title={selectedProject?.title} description={selectedProject?.description} />
+          <ProjectDescription stack = {selectedProject?.stack} number = {selectedProject?.number} title={selectedProject?.title} description={selectedProject?.description} />
         </div>
       )}
     </>
