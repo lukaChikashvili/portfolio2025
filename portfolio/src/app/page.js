@@ -4,9 +4,10 @@ import Lights from "@/components/Lights";
 import { Canvas, useThree } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Moon, Sun } from "lucide-react";
-import { useRef, useState, forwardRef, useImperativeHandle } from "react";
+import { useRef, useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import * as THREE from "three";
 import gsap from "gsap";
+import ProjectDescription from "@/components/ProjectDescription";
 
 
 const CameraController = forwardRef((props, ref) => {
@@ -31,6 +32,9 @@ const CameraController = forwardRef((props, ref) => {
   return null;
 });
 
+
+
+
 export default function Home() {
   const [isNight, setIsNight] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
@@ -44,6 +48,26 @@ export default function Home() {
     setShowOverlay(false);
     cameraRef.current?.resetCamera();
   };
+
+  useEffect(() => {
+    gsap.to('.glass', {
+      opacity: 1,
+      duration: 1.2,
+      ease: "power3.inOut",
+      delay: 0.7
+    });
+
+    if(!showOverlay) {
+      gsap.to('.glass', {
+        opacity: 0,
+        duration: 1.2,
+        ease: "power3.inOut",
+        delay: 0.7
+      });
+    }
+  }, [showOverlay]);
+
+  const [selectedProject, setSelectedProject] = useState(null); 
 
   return (
     <>
@@ -64,6 +88,8 @@ export default function Home() {
             descRef={descRef}
             onShowOverlay={() => setShowOverlay(true)}
             cameraRef={cameraRef}
+            selectedProject = {selectedProject}
+            setSelectedProject = {setSelectedProject}
           />
           <CameraController ref={cameraRef} />
         </Physics>
@@ -78,13 +104,15 @@ export default function Home() {
 
   
       {showOverlay && (
-        <div className="absolute top-5 left-5 z-10 glass w-[90%] h-[90%] mt-8 ml-16 flex items-center justify-center">
+        <div className="opacity-0 absolute top-5 left-5 z-10 glass w-[90%] h-[90%] mt-8 ml-16 flex items-center justify-center">
           <button
             className="absolute top-4 right-4 text-white bg-black/40 px-3 py-1 rounded"
             onClick={closeOverlay}
           >
             ✕
           </button>
+
+          <ProjectDescription title={selectedProject?.title} description={selectedProject?.description} />
         </div>
       )}
     </>

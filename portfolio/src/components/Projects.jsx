@@ -9,6 +9,7 @@ import gsap from 'gsap'
 import ProjectName from './ProjectName';
 import InfoBoard from './InfoBoard';
 import Description from './Description';
+import { ProjectList } from './ProjectList';
 
 const ChainGroup = forwardRef(({ position, imageUrl, onClick }, ref) => {
   
@@ -57,7 +58,7 @@ const ChainGroup = forwardRef(({ position, imageUrl, onClick }, ref) => {
   );
 });
 
-const Projects = ({chainRefs, descRef, onShowOverlay}) => {
+const Projects = ({chainRefs, descRef, onShowOverlay, selectedProject, setSelectedProject}) => {
   const { camera } = useThree();
 
   const boardRef = useRef();
@@ -67,7 +68,7 @@ const Projects = ({chainRefs, descRef, onShowOverlay}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [textureOpacity, setTextureOpacity] = useState(1);
 
-  const [selectedProject, setSelectedProject] = useState(null); 
+
 
   const nextBtn = useRef();
   const prevBtn = useRef();
@@ -347,7 +348,11 @@ const leftArrow = useTexture('./arrowLeft.png');
     onComplete: () => {
       setSelectedProject({
         index,
-        position: chainPos
+        position: chainPos,
+        title: ProjectList[index].title,
+        description: ProjectList[index].description,
+
+
       });
       signBoardAnimationDown();
       descAnimation();
@@ -459,7 +464,7 @@ const hideInfo = (index, onHidden) => {
 
       <ProjectName projectNameRef={projectRef} textureUrl={projectNames[currentIndex]} />
 
-      <Description ref = {descRef} onShowOverlay={onShowOverlay}  />
+      <Description ref = {descRef} onShowOverlay={onShowOverlay}   />
     </>
   );
 };

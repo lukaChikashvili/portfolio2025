@@ -13,7 +13,7 @@ import FireFlies from './FireFlies'
 import Projects from './Projects'
 
 
-const Experience = ({ isNight, descRef, onShowOverlay}) => {
+const Experience = ({ isNight, descRef, onShowOverlay, selectedProject, setSelectedProject}) => {
 
     const shaderRef = useRef();
 
@@ -251,7 +251,7 @@ const Experience = ({ isNight, descRef, onShowOverlay}) => {
 <FireFlies />
 
 {/* Projects */}
-<Projects chainRefs={chainRefs} descRef={descRef} onShowOverlay={onShowOverlay}   />
+<Projects chainRefs={chainRefs} descRef={descRef} onShowOverlay={onShowOverlay} selectedProject = {selectedProject} setSelectedProject = {setSelectedProject}  />
     </>
   )
 }
