@@ -33,6 +33,7 @@ const CameraController = forwardRef((props, ref) => {
   return null;
 });
 
+CameraController.displayName = "CameraController"; 
 
 
 
