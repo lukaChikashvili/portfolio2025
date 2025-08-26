@@ -1,4 +1,4 @@
-import { useGLTF, useTexture } from '@react-three/drei'
+import { Html, useGLTF, useTexture } from '@react-three/drei'
 import React, { useRef, useState, forwardRef, useImperativeHandle } from 'react'
 import { goBack } from './GoBack';
 import { useFrame, useThree } from '@react-three/fiber';
@@ -40,7 +40,8 @@ const ChainGroup = forwardRef(({ position, imageUrl, onClick }, ref) => {
   
 
   return (
-    <group ref={ref} position={position} onClick={onClick}   >
+    <group ref={ref} position={position} onClick={onClick}
+        >
       <primitive
         object={chain.scene.clone()}
         scale={0.3}
@@ -54,6 +55,8 @@ const ChainGroup = forwardRef(({ position, imageUrl, onClick }, ref) => {
           uniforms={uniforms.current}
         />
       </mesh>
+
+      
     </group>
   );
 });
@@ -437,6 +440,7 @@ const hideInfo = (index, onHidden) => {
           ref={(el) => (chainRefs.current[i] = el)}
           position={initialPositions[i]}
           imageUrl={img}
+          
           onClick={(e) => {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
