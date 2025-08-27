@@ -49,7 +49,7 @@ const Menu = ({ chainRefs }) => {
    const showSkills = () => {
     gsap.to(camera.position, {
   
-    y: -11,
+    y: -15,
     duration: 2,
     ease: 'power2.inOut',
     
