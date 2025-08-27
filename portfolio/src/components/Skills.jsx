@@ -10,11 +10,11 @@ const Skills = () => {
     const textures = useTexture(images);
   return (
       <>
-        <group position = {[-100, 11, 0]}>
+        <group position = {[-300, 11, -4]}>
       {textures.map((texture, index) => (
         <mesh 
           key={index} 
-          position={[index * 30, 0, 0]} 
+          position={[index * 100, 0, 0]} 
         >
           <planeGeometry args={[20, 6]} /> 
           <meshBasicMaterial map={texture} />
