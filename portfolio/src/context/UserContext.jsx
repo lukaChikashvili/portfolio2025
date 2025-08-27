@@ -8,8 +8,9 @@ export const UserContext = createContext();
 const UserProvider = ({ children }) => {
 
     const [selectedProject, setSelectedProject] = useState(null);
+    const [backArrow, setBackArrow] = useState(false);
 
-    return (<UserContext.Provider value = {{selectedProject, setSelectedProject}} >
+    return (<UserContext.Provider value = {{selectedProject, setSelectedProject, backArrow, setBackArrow}} >
         {children}
     </UserContext.Provider>)
 }

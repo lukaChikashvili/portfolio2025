@@ -1,14 +1,19 @@
 import { useGLTF, useTexture } from '@react-three/drei'
-import React, { useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import Train from './Train'
 import * as THREE from 'three'
 import Skills from './Skills'
 import gsap from 'gsap'
 import { useThree } from '@react-three/fiber'
+import Flag from './Flag'
+import { UserContext } from '@/context/UserContext'
 
 const Metro = () => {
 
   const tile = useTexture('./tile.jpg');
+
+
+  const { backArrow } = useContext(UserContext);
 
 
   tile.wrapS = THREE.ClampToEdgeWrapping;
@@ -26,11 +31,21 @@ const Metro = () => {
 
   const {camera} = useThree();
 
+  useEffect(() => {
+    if (backArrow) {
+      
+      arrowRef.current.position.set(-5, 0, 15);
+      leftArrowRef.current.position.set(10, 0, 15);
+    }
+  }, [backArrow]);
+
+
+
   // animate train
   const moveTrain = (distance) => {
     gsap.to(trainRef.current.position, {
       x: trainRef.current.position.x + distance, 
-      duration: 5,
+      duration: 4,
       delay: 1,
       ease: "power2.out"
     });
@@ -68,6 +83,10 @@ const Metro = () => {
    })
       
     }
+
+
+   
+    
    
    
   }
@@ -132,7 +151,8 @@ const Metro = () => {
 
     <Skills />
 
-
+    
+    
     </group>
 
    
