@@ -2,6 +2,8 @@ import { useGLTF, useTexture } from '@react-three/drei'
 import React from 'react'
 import Train from './Train'
 import * as THREE from 'three'
+import Flag from './Flag'
+import Skills from './Skills'
 
 const Metro = () => {
 
@@ -11,6 +13,10 @@ const Metro = () => {
   tile.wrapS = THREE.ClampToEdgeWrapping;
   tile.wrapT = THREE.ClampToEdgeWrapping;
   tile.repeat.set(0, 1);
+
+  // arrows
+  const arrow = useGLTF('./arrow.glb');
+
 
   return (
     <>
@@ -48,8 +54,16 @@ const Metro = () => {
       </mesh>
 
 <Train />
-      
+     <primitive object={arrow.scene} position = {[0, 0, 15]}  rotation={[0, Math.PI / 2, 0]}  />
+     <primitive object={arrow.scene.clone()} position = {[10, 0, 15]} rotation={[0, -Math.PI / 2, 0]}/>
+
+
+    <Skills />
+
+
     </group>
+
+   
 
    
     </>
