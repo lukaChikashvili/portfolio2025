@@ -1,9 +1,9 @@
 import { useGLTF, useTexture } from '@react-three/drei'
-import React from 'react'
+import React, { useRef } from 'react'
 import Train from './Train'
 import * as THREE from 'three'
-import Flag from './Flag'
 import Skills from './Skills'
+import gsap from 'gsap'
 
 const Metro = () => {
 
@@ -17,6 +17,17 @@ const Metro = () => {
   // arrows
   const arrow = useGLTF('./arrow.glb');
 
+  const trainRef = useRef();
+
+
+  // animate train
+  const moveTrain = (distance) => {
+    gsap.to(trainRef.current.position, {
+      x: trainRef.current.position.x + distance, 
+      duration: 0.5,
+      ease: "power2.out"
+    });
+  }
 
   return (
     <>
@@ -53,9 +64,27 @@ const Metro = () => {
         <meshStandardMaterial color="#444" />
       </mesh>
 
-<Train />
-     <primitive object={arrow.scene} position = {[0, 0, 15]}  rotation={[0, Math.PI / 2, 0]}  />
-     <primitive object={arrow.scene.clone()} position = {[10, 0, 15]} rotation={[0, -Math.PI / 2, 0]}/>
+<Train ref = {trainRef}/>
+
+    {/* Arrows */}
+
+    <group 
+  position={[-10, 0, 15]} 
+  rotation={[0, Math.PI / 2, 0]} 
+  onClick={() => moveTrain(-50)} 
+>
+  <primitive object={arrow.scene.clone()} />
+</group>
+
+{/* Left arrow */}
+<group 
+  position={[10, 0, 15]} 
+  rotation={[0, -Math.PI / 2, 0]} 
+  onClick={() => moveTrain(50)} 
+>
+  <primitive object={arrow.scene.clone()} />
+</group>
+   
 
 
     <Skills />

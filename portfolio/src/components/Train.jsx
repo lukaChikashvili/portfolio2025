@@ -1,7 +1,7 @@
 import { useGLTF } from '@react-three/drei'
 import React from 'react'
 
-const Train = () => {
+const Train = ({ ref }) => {
   
      const train = useGLTF('./train.glb');
 
@@ -9,7 +9,7 @@ const Train = () => {
 
   return (
    <>
-     <primitive object={train.scene} scale = {3} rotation = {[0, 1.6, 0]} position = {[70, 8, 0]} />
+     <primitive ref = {ref} object={train.scene} scale = {3} rotation = {[0, 1.6, 0]} position = {[70, 8, 0]} />
    </>
   )
 }
