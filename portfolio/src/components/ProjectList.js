@@ -24,6 +24,7 @@ export const ProjectList = [
     {
         id: 2,
         title: "FakeElections",
+        number: "002",
         description: `
         is a satirical web app that simulates a digital voting environment, where users can register to vote and cast their vote for various political parties in a fictional election. The platform is designed for fun, experimentation, and educational purposes — perfect for testing UI/UX around voting systems or just engaging users in a lighthearted mock political process.
         `,
@@ -44,8 +45,9 @@ export const ProjectList = [
 
     {
         id: 3,
-        name: "My3DGirl",
-        text: `
+        title: "My3DGirl",
+        number: "003",
+        description: `
         is a creative web-based application that allows users to interact with a customizable 3D female character in real time. Built with modern 3D web technologies, the platform offers an immersive and playful environment
          where users can:  Choose from a variety of outfits to dress the 3D girl model, from casual styles to themed costumes, Change or remove clothes to personalize the appearance, Capture screenshots of your styled 3D avatar, Post your creations to a public feed to share with others or browse outfits styled by the community
         `,

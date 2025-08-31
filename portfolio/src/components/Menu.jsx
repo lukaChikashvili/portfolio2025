@@ -17,7 +17,7 @@ const Menu = ({ chainRefs }) => {
     // show projects camera movement
     const showContact = () => {
          gsap.to(camera.position, {
-            x: 0.57,
+            x: 2.57,
       y: 19.6,
       z: 52,
       duration: 2,
