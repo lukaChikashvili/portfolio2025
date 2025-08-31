@@ -68,8 +68,9 @@ export const ProjectList = [
    
     {
         id: 4,
-        name: "Personal blog",
-        text: `
+        title: "Personal blog",
+        number: "004",
+        description: `
           this is my blog about programming and languages.
         `,
         stack: [
@@ -89,8 +90,9 @@ export const ProjectList = [
 
     {
         id: 5,
-        name: "Baia Sports Complex",
-        text: `
+        title: "Baia Sports Complex",
+        number: "005",
+        description: `
           Gym Full stack aplication, where you can book visits, read blog and so on. it has also admin page, where admin can control users
         `,
         stack: [
@@ -110,8 +112,9 @@ export const ProjectList = [
 
     {
         id: 6,
-        name: "FluentFlow",
-        text: `
+        title: "FluentFlow",
+        number: "006",
+        description: `
           language learning application, where you can create online dictionary, upload books and  so on.
         `,
         stack: [
@@ -131,8 +134,9 @@ export const ProjectList = [
 
     {
         id: 7,
-        name: "MixMaster",
-        text: `
+        title: "MixMaster",
+        number: "007",
+        description: `
         Welcome to MixMaster, the cutting edge 3D software designed for artists, designers, 
         and creators who want to bring their imagination to life with ease and precision. 
         Whether you are a seasoned professional or a budding enthusiast, MixMaster provides a 
@@ -157,8 +161,9 @@ export const ProjectList = [
 
     {
         id: 8,
-        name: "Planetarium X",
-        text: `
+        title: "Planetarium X",
+        number: "008",
+        description: `
         Planetarium X is your gateway to the cosmos! Explore stunningly realistic 3D representations of planets in
          our solar system and beyond. Dive into a rich repository of fascinating information about each planet, 
          from their physical characteristics. Whether you're a space enthusiast, a student, or just curious about 
@@ -179,8 +184,9 @@ export const ProjectList = [
 
     {
         id: 9,
-        name: "NeoWriters",
-        text: `
+        title: "NeoWriters",
+        number: "009",
+        description: `
         NeoWriters is a platform for aspiring authors and publishing enthusiasts.
          With NeoWriters, you can create and edit your book, design stunning book covers, and publish your work
           with ease. The app offers a seamless experience, allowing you to download your finalized book and share 
@@ -204,8 +210,9 @@ export const ProjectList = [
 
     {
         id: 10,
-        name: "EternalMemories",
-        text: `
+        title: "EternalMemories",
+        number: "010",
+        description: `
         Eternal Memories is a heartfelt platform dedicated to honoring the lives and legacies of loved ones.
          With a compassionate approach, it offers a space to create, share, and preserve cherished memories 
          through personalized tributes. Whether celebrating their achievements, sharing stories, or connecting
@@ -227,8 +234,9 @@ export const ProjectList = [
 
     {
         id: 11,
-        name: "Vangadamus",
-        text: `
+        title: "Vangadamus",
+        number: "011",
+        description: `
         Step into the mystical world of Vangadamus, the fortune-teller app that reveals your 
         destiny with a roll of the dice! Let the numbers guide you as each roll unveils unique insights,
          predictions, and possibilities. Whether you're seeking answers or just a bit of fun,
@@ -250,8 +258,9 @@ export const ProjectList = [
 
     {
         id: 12,
-        name: "Paradise",
-        text: `
+        title: "Paradise",
+        number: "012",
+        description: `
         Paradise is a unique and thoughtful app that lets you design and customize gravestones 
         to honor and celebrate the lives of your loved ones. Add personal touches with images, heartfelt text, 
         and beautiful textures to create a meaningful tribute. Whether you're preserving memories or planning ahead, 
@@ -274,8 +283,9 @@ export const ProjectList = [
 
     {
         id: 13,
-        name: "Cigars",
-        text: `
+        title: "Cigars",
+        number: "013",
+        description: `
         Cigars is a captivating website dedicated to exploring the rich history and timeless tradition of cigars. 
         Dive into stories of their origins, cultural significance, and evolution through the ages.
          Whether you're an enthusiast or simply curious, Cigars offers a journey into the art, craftsmanship, 
@@ -298,8 +308,9 @@ export const ProjectList = [
 
     {
         id: 14,
-        name: "Portfolio 2024",
-        text: `
+        title: "Portfolio 2024",
+        number: "014",
+        description: `
         My old portfolio was a showcase of my early creative journey as a web developer. 
         It highlighted my skills, projects, and growth, reflecting my passion for innovative design and coding. 
         A testament to my beginnings, 
@@ -322,8 +333,9 @@ export const ProjectList = [
 
     {
         id: 15,
-        name: "Portfolio 2023",
-        text: `
+        title: "Portfolio 2023",
+        number: "015",
+        description: `
         My old portfolio was a showcase of my early creative journey as a web developer. 
         It highlighted my skills, projects, and growth, reflecting my passion for innovative design and coding. 
         A testament to my beginnings, 
