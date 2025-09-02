@@ -4,6 +4,14 @@ import React from 'react'
 const Skills = () => {
 
     const images = [
+      "./languages/georgian.png",
+      "./languages/portuguese.png",
+      "./languages/italian.png",
+      "./languages/french.png",
+      "./languages/hindi.png",
+      "./languages/chinese.png",
+      "./languages/spanish.png",
+      "./languages/english.png",
       "./skills/langs.png",
         "./skills/next.png", 
         "./skills/react.png",
@@ -23,7 +31,7 @@ const Skills = () => {
     const textures = useTexture(images);
   return (
       <>
-        <group position = {[-1200, 11, -4]}>
+        <group position = {[-2000, 11, -4]}>
       {textures.map((texture, index) => (
         <mesh 
           key={index} 

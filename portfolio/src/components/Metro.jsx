@@ -97,25 +97,25 @@ const Metro = () => {
             <group position={[0, -29, 0]}>
       {/* Floor */}
       <mesh receiveShadow >
-        <boxGeometry args={[2500, 0.8, 57]} />
+        <boxGeometry args={[4500, 0.8, 57]} />
          <meshBasicMaterial map = {tile} />
       </mesh>
      
 
       {/* Ceiling */}
       <mesh position={[0, 15, 0]}>
-        <boxGeometry args={[2500, 0.5, 50]} />
+        <boxGeometry args={[4500, 0.5, 50]} />
         <meshStandardMaterial color="#777" />
       </mesh>
 
       {/* Back Wall */}
       <mesh position={[0, 4, -25]}>
-        <boxGeometry args={[2500, 30, 0.8]} />
+        <boxGeometry args={[4500, 30, 0.8]} />
         <meshStandardMaterial color="#333" />
       </mesh>
 
       {/* Left Wall */}
-      <mesh position={[-2500, 4, 0]}>
+      <mesh position={[-4500, 4, 0]}>
         <boxGeometry args={[0.5, 30, 50]} />
         <meshStandardMaterial color="#444" />
       </mesh>
