@@ -16,13 +16,22 @@ const House = () => {
 
 
   const showLinks = () => {
-       gsap.to(linkRef.current.position, {
-          x: -18,
-          duration: 1,
-          ease: "power2.out"
-       });
+  if(!showLink) {
+    gsap.to(linkRef.current.position, {
+      x: -18,
+      duration: 1,
+      ease: "power2.out"
+   });
+  }else {
+    gsap.to(linkRef.current.position, {
+      x: 14,
+      duration: 1,
+      ease: "power2.out"
+   });
+  }
+      
 
-       setShowLink(true);
+       setShowLink(!showLink);
 
    
   }
@@ -221,7 +230,7 @@ const House = () => {
       friction={0.6}
       angularDamping={0.2}
       linearDamping={0.05} >
-<mesh ref = {linkedinRef} position = {[15, 30, 45]}>
+<mesh ref = {linkedinRef} position = {[15, 40, 45]}>
   <boxGeometry args = {[5, 3, 3]} />
   <meshBasicMaterial map = {linkedIn} />
 </mesh>
