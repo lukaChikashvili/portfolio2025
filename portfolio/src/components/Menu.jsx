@@ -14,12 +14,13 @@ const Menu = ({ chainRefs }) => {
     const fixedRotation = camera.rotation.clone();
 
 
-    // show projects camera movement
+    // show contact camera movement
     const showContact = () => {
          gsap.to(camera.position, {
-            x: 2.57,
-      y: 19.6,
-      z: 52,
+          
+      x: -5,
+      y: 20,
+      z: 53,
       duration: 2,
       ease: 'power2.inOut',
       onUpdate: () => {

@@ -15,6 +15,10 @@ import Loading from "@/components/Loading";
 const CameraController = forwardRef((props, ref) => {
   const { camera } = useThree();
 
+  useEffect(() => {
+    console.log(camera.position)
+  })
+
   useImperativeHandle(ref, () => ({
     resetCamera: () => {
       gsap.to(camera.position, {
@@ -96,6 +100,7 @@ export default function Home() {
             selectedProject = {selectedProject}
             setSelectedProject = {setSelectedProject}
           />
+          <Loading />
           <CameraController ref={cameraRef} />
          
         </Physics>

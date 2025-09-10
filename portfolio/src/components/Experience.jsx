@@ -153,7 +153,8 @@ const Experience = ({ isNight, descRef, onShowOverlay, selectedProject, setSelec
      
   return (
     <>
-      
+
+    
        <Environment preset="forest"  />
 
        {/* Grass Field */}
@@ -257,7 +258,7 @@ const Experience = ({ isNight, descRef, onShowOverlay, selectedProject, setSelec
 {/* Projects */}
 <Projects chainRefs={chainRefs} descRef={descRef} onShowOverlay={onShowOverlay} selectedProject = {selectedProject} setSelectedProject = {setSelectedProject}  />
 
-<Loading />
+
     </>
   )
 }

@@ -1,5 +1,5 @@
 import { useGLTF, useTexture } from '@react-three/drei'
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { useThree } from '@react-three/fiber'
@@ -9,18 +9,45 @@ import { goBack } from './GoBack'
 
 const House = () => {
 
+   const [showLink, setShowLink] = useState(false);
+
+  const linkRef = useRef();
+  const linkedinRef = useRef();
+
+
+  const showLinks = () => {
+       gsap.to(linkRef.current.position, {
+          x: -18,
+          duration: 1,
+          ease: "power2.out"
+       });
+
+       setShowLink(true);
 
    
-    // wall texture
+  }
+   
+  // wall texture
     const wallTexture = useTexture('./wall.webp');
     wallTexture.wrapS = wallTexture.wrapT = THREE.RepeatWrapping;
   wallTexture.repeat.set(0.25, 0.25);
 
+ // floor texture
   const floorTexture = useTexture('./floor.jpg');
   floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
   floorTexture.repeat.set(20, 20);
 
   const homeTexture = useTexture('./home.png');
+
+  // social textures
+  const linkedIn = useTexture('./linkedin.png');
+  const button = useTexture('./links.png');
+  const github = useTexture('./git.png');
+  const facebook = useTexture('./face.png');
+
+
+
+
 
 
   const title = useGLTF('./title.glb');
@@ -142,6 +169,7 @@ const House = () => {
 
   return (
     <>
+    {/*  wall  */}
     <RigidBody type='fixed'>
     <mesh position={[0, 18, 40]}>
       <shapeGeometry args={[shape]} />
@@ -149,6 +177,15 @@ const House = () => {
     </mesh>
     </RigidBody>
 
+     {/*  wall  */}
+     <RigidBody type='fixed'>
+    <mesh rotation = {[0, -1, 0]} position={[43, 18, 65]}>
+      <shapeGeometry args={[shape]} />
+      <meshStandardMaterial  map = {wallTexture} side={THREE.DoubleSide} />
+    </mesh>
+    </RigidBody>
+
+ {/*  floor  */}
 <RigidBody type='fixed'>
 <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0,10, 190]}>
 <planeGeometry args={[400, 300]} />
@@ -168,6 +205,55 @@ const House = () => {
     <meshBasicMaterial map = {homeTexture} />
 </mesh>
 
+{/*  social button */}
+<RigidBody type = "dynamic" >
+<mesh ref = {linkRef} position = {[15, 11, 45]} onClick={showLinks}>
+  <boxGeometry args = {[20, 1, 5]} />
+  <meshBasicMaterial map = {button} />
+</mesh>
+</RigidBody>
+ 
+{showLink && <>
+<RigidBody    type="dynamic"
+      colliders="cuboid"   
+      mass={2}
+      restitution={0.2}   
+      friction={0.6}
+      angularDamping={0.2}
+      linearDamping={0.05} >
+<mesh ref = {linkedinRef} position = {[15, 30, 45]}>
+  <boxGeometry args = {[5, 3, 3]} />
+  <meshBasicMaterial map = {linkedIn} />
+</mesh>
+</RigidBody>
+
+<RigidBody type="dynamic"
+      colliders="cuboid"
+      mass={1.5}
+      restitution={0.1}
+      friction={0.5}
+      angularDamping={0.2}
+      linearDamping={0.05}>
+<mesh ref = {linkedinRef} position = {[10, 45, 45]}>
+  <boxGeometry args = {[5, 3, 3]} />
+  <meshBasicMaterial map = {github} />
+</mesh>
+</RigidBody>
+
+<RigidBody type="dynamic"
+      colliders="hull"
+      mass={1.5}
+      restitution={0.2}
+      friction={0.5}
+      angularDamping={0.2}
+      linearDamping={0.05}>
+<mesh ref = {linkedinRef} position = {[7, 50, 44]}>
+  <boxGeometry args = {[5, 3, 3]} />
+  <meshBasicMaterial map = {facebook} />
+</mesh>
+</RigidBody>
+</>
+}
 
 </>
   )
