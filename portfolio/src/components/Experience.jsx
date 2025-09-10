@@ -11,6 +11,7 @@ import Aquarium from './Aquarium'
 import Metro from './Metro'
 import FireFlies from './FireFlies'
 import Projects from './Projects'
+import Loading from './Loading'
 
 
 const Experience = ({ isNight, descRef, onShowOverlay, selectedProject, setSelectedProject}) => {
@@ -152,7 +153,7 @@ const Experience = ({ isNight, descRef, onShowOverlay, selectedProject, setSelec
      
   return (
     <>
-
+      
        <Environment preset="forest"  />
 
        {/* Grass Field */}
@@ -176,6 +177,7 @@ const Experience = ({ isNight, descRef, onShowOverlay, selectedProject, setSelec
       ))*/}
       </group>
       
+      
        {signs.map((item, i) => {
         const clonedSign = sign.scene.clone(true);
 
@@ -190,6 +192,8 @@ const Experience = ({ isNight, descRef, onShowOverlay, selectedProject, setSelec
           </group>
         )
        })}
+
+      
 
 
 {houses.map((item, i) => {
@@ -252,6 +256,8 @@ const Experience = ({ isNight, descRef, onShowOverlay, selectedProject, setSelec
 
 {/* Projects */}
 <Projects chainRefs={chainRefs} descRef={descRef} onShowOverlay={onShowOverlay} selectedProject = {selectedProject} setSelectedProject = {setSelectedProject}  />
+
+<Loading />
     </>
   )
 }

@@ -9,6 +9,7 @@ import * as THREE from "three";
 import gsap from "gsap";
 import ProjectDescription from "@/components/ProjectDescription";
 import { UserContext } from "@/context/UserContext";
+import Loading from "@/components/Loading";
 
 
 const CameraController = forwardRef((props, ref) => {
@@ -96,6 +97,7 @@ export default function Home() {
             setSelectedProject = {setSelectedProject}
           />
           <CameraController ref={cameraRef} />
+         
         </Physics>
       </Canvas>
 
